@@ -1,0 +1,25 @@
+.ProfilePage-main-container {
+  min-height: 100vh;
+  height: 100%;
+  background: #b2fefa;
+  background: -webkit-linear-gradient(
+    to bottom,
+    #b2fefa,
+    #0ed2f7
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #b2fefa,
+    #0ed2f7
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  padding-bottom: 2rem;
+}
+
+.ProfilePage-edit-icon {
+  font-size: 30px;
+  position: absolute;
+  right: 0;
+  padding: 10px;
+  outline-style: none;
+  font-size: clamp(30px, 5vw, 55px);
+}
