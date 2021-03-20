@@ -1,0 +1,26 @@
+.WorkExperienceSection-main-container {
+  width: 100%;
+}
+
+.WorkExperienceSection-TopContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.WorkExperienceSection-topText {
+  text-align: center;
+  font-family: Montserrat;
+  font-weight: 550;
+  font-size: clamp(28px, 5vw, 50px);
+}
+
+.WorkExperienceSection-edit-icon {
+  font-size: 30px;
+  position: absolute;
+  right: 0;
+  padding: 7px 25px 10px;
+  outline-style: none;
+  font-size: clamp(30px, 5vw, 55px);
+}

@@ -4,16 +4,15 @@ import { useHistory } from "react-router-dom";
 
 import { EditOutlined } from "@ant-design/icons";
 import { Alert } from "antd";
-// import CreateProfileModal from "../components/CreateProfileModal";
+import CreateProfileCard from "../components/CreateProfileCard";
 import LoadingSpinner from "../shared/components/LoadingSpinner";
-// import ProfileIntro from "./Sections/ProfileIntro";
-// import WorkExperienceSection from "./Sections/WorkExperienceSection";
+import ProfileIntro from "./profilePageSections/ProfileIntro";
+import WorkExperienceSection from "./profilePageSections/WorkExperienceSection";
 
-// import { fetchProfile } from "../store/profile/action";
+import { fetchProfile } from "../store/profile/action";
 
 import "./ProfilePage.css";
 import "antd/dist/antd.css";
-import CreateProfileCard from "../components/CreateProfileCard";
 
 const ProfilePage = (props) => {
   const { profile, isLoading, errorMessage } = useSelector(
@@ -26,7 +25,7 @@ const ProfilePage = (props) => {
   const [isOffline, setIsOffline] = useState();
 
   useEffect(() => {
-    // dispatch(fetchProfile());
+    dispatch(fetchProfile());
   }, [dispatch]);
 
   window.addEventListener("online", () => {
@@ -64,48 +63,47 @@ const ProfilePage = (props) => {
 
   let personalInformationTitle;
 
-  //   if (!profile)
+  if (!profile)
+    return (
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        {errors()}
+        {profile === null && isLoading && <LoadingSpinner asOverlay />}
+        {!isLoading && <CreateProfileCard />}
+      </div>
+    );
+  else {
+    personalInformationTitle = [{ title: "Age", value: profile.age }];
+
+    if (profile.email)
+      personalInformationTitle.push({ title: "Email", value: profile.email });
+    if (profile.contactNumber)
+      personalInformationTitle.push({
+        title: "Contact Number",
+        value: profile.contactNumber,
+      });
+  }
+
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <>
       {errors()}
-      {profile === null && isLoading && <LoadingSpinner asOverlay />}
-      {!isLoading && <CreateProfileCard />}
-      <CreateProfileCard />
-    </div>
+      <div className="ProfilePage-main-container">
+        {isLoading && <LoadingSpinner asOverlay />}
+        {props.children}
+        <EditOutlined
+          className="ProfilePage-edit-icon"
+          onClick={() => {
+            history.push(`/${profile.id}/edit/intro`);
+          }}
+        />
+        <ProfileIntro
+          profileImage={profile.profileImage}
+          name={profile.name}
+          information={personalInformationTitle}
+        />
+        <WorkExperienceSection profileId={profile.id} />
+      </div>
+    </>
   );
-  //   else {
-  //     personalInformationTitle = [{ title: "Age", value: profile.age }];
-
-  //     if (profile.email)
-  //       personalInformationTitle.push({ title: "Email", value: profile.email });
-  //     if (profile.contactNumber)
-  //       personalInformationTitle.push({
-  //         title: "Contact Number",
-  //         value: profile.contactNumber,
-  //       });
-  //   }
-
-  //   return (
-  //     <>
-  //       {errors()}
-  //       <div className="ProfilePage-main-container">
-  //         {isLoading && <LoadingSpinner asOverlay />}
-  //         {props.children}
-  //         <EditOutlined
-  //           className="ProfilePage-edit-icon"
-  //           onClick={() => {
-  //             history.push(`/${profile.id}/edit/intro`);
-  //           }}
-  //         />
-  //         {/* <ProfileIntro
-  //           profileImage={profile.profileImage}
-  //           name={profile.name}
-  //           information={personalInformationTitle}
-  //         />
-  //         <WorkExperienceSection profileId={profile.id} /> */}
-  //       </div>
-  //     </>
-  //   );
 };
 
 export default ProfilePage;
