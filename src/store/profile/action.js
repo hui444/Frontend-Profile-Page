@@ -1,28 +1,36 @@
 import { ENDPOINTS } from "../../common/endpoints";
 import useSnackbar from "../../shared/hooks/useSnackbar";
+import { dummyProfile } from "../Stubs";
 import { ACTION } from "./reducer";
 
-export const getProfileById = (profileId) => async (dispatch) => {
+export const getProfileById = () => async (dispatch) => {
+  console.log("hello");
   dispatch(setIsLoading(true));
-  const [error] = useSnackbar("error");
-
-  await fetch(`${ENDPOINTS.URL}/${profileId}`)
-    .then((resp) => {
-      if (resp.status >= 400) {
-        console.log(resp);
-        error("Failed to fetch profile, please try again later.");
-      } else {
-        return resp.json();
-      }
-    })
-    .then((resp) => {
-      dispatch({
-        type: ACTION.GET_PROFILE_BY_PID,
-        profile: resp.profle,
-      });
-    })
-    .catch((err) => console.log(err));
+  // const [error] = useSnackbar("error");
+  await dispatch({
+    type: ACTION.GET_PROFILE_BY_PID,
+    userProfile: dummyProfile,
+  });
+  console.log("this passed");
+  //uncomment when linked
+  // await fetch(`${ENDPOINTS.URL}/${profileId}`)
+  //   .then((resp) => {
+  //     if (resp.status >= 400) {
+  //       console.log(resp);
+  //       error("Failed to fetch profile, please try again later.");
+  //     } else {
+  //       return resp.json();
+  //     }
+  //   })
+  //   .then((resp) => {
+  //     dispatch({
+  //       type: ACTION.GET_PROFILE_BY_PID,
+  //       profile: resp.profle,
+  //     });
+  //   })
+  //   .catch((err) => console.log(err));
   dispatch(setIsLoading(false));
+  console.log("hi");
 };
 
 export const getWorkExperienceById = (profileId, weId) => async (dispatch) => {

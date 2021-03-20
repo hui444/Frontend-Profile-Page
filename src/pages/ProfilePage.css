@@ -1,20 +1,3 @@
-.ProfilePage-main-container {
-  min-height: 100vh;
-  height: 100%;
-  background: #b2fefa;
-  background: -webkit-linear-gradient(
-    to bottom,
-    #b2fefa,
-    #0ed2f7
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to bottom,
-    #b2fefa,
-    #0ed2f7
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  padding-bottom: 2rem;
-}
-
 .ProfilePage-edit-icon {
   font-size: 30px;
   position: absolute;
@@ -22,4 +5,32 @@
   padding: 10px;
   outline-style: none;
   font-size: clamp(30px, 5vw, 55px);
+}
+
+.profilePage-topContainer {
+  position: relative;
+  height: 250px;
+  width: 100vw;
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.profilePage-topContainer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(/src/assets/background6.jpg);
+  background-size: cover;
+  filter: opacity(0.7);
+}
+
+.profilePage-topContainer-inside {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

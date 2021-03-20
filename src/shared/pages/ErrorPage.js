@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 
 import { Result, Button } from "antd";
 
+import "antd/dist/antd.css";
+
 const ErrorPage = () => {
   const history = useHistory();
 

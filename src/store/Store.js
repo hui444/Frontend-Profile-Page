@@ -19,7 +19,7 @@ const store = createStore(
 store.subscribe(
   throttle(() => {
     saveState({
-      todos: store.getState().todos,
+      profile: store.getState().profile,
     });
   }, 1000)
 );

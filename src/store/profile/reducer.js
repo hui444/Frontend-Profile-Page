@@ -1,6 +1,6 @@
 const initialState = {
   isLoading: false,
-  profile: undefined,
+  userProfile: undefined,
   workExperience: undefined,
   allWorkExperiences: undefined,
 };
@@ -23,7 +23,7 @@ export const profile = (state = initialState, action) => {
     case ACTION.GET_PROFILE_BY_PID: {
       return {
         ...state,
-        profile: action.profile,
+        userProfile: action.userProfile,
       };
     }
     case ACTION.GET_WORK_EXPERIENCE_BY_WEID: {
