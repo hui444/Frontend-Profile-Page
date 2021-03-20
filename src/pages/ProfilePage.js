@@ -104,24 +104,27 @@ const ProfilePage = (props) => {
             </div>
           </div>
           <div>
-            <h3
-              style={{
-                width: "100%",
-                textAlign: "center",
-                borderBottom: "1px solid #000",
-                lineHeight: "0.1em",
-                margin: "20px 0 30px",
-              }}
-            >
-              <span style={{ padding: "0 10px", background: "#fff" }}>
-                ABOUT ME
-              </span>
-            </h3>
+            <div style={{ margin: "0 7vw" }}>
+              <h3
+                style={{
+                  width: "100%",
+                  textAlign: "center",
+                  borderBottom: "1px solid #000",
+                  lineHeight: "0.1em",
+                  margin: "20px 0 30px",
+                }}
+              >
+                <span style={{ padding: "0 10px", background: "#fff" }}>
+                  ABOUT ME
+                </span>
+              </h3>
+            </div>
             <div style={{ width: "90vw", margin: "auto" }}>
               <div
                 style={{
                   display: "flex",
                   flexDirection: "row",
+                  marginBottom: "1rem",
                 }}
               >
                 <div
@@ -140,39 +143,48 @@ const ProfilePage = (props) => {
                   style={{
                     width: "70%",
                     padding: "10px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-evenly",
                   }}
                 >
-                  <UserOutlined /> Name: {userProfile?.name}
-                  <br />
-                  <IdcardOutlined /> Age: {userProfile?.age}
-                  <br />
-                  <PhoneOutlined /> Phone: {userProfile?.contactNumber}
-                  <br />
-                  <MailOutlined /> Email: {userProfile?.email}
-                  <br />
+                  <div>
+                    <UserOutlined /> Name: {userProfile?.name}
+                  </div>
+                  <div>
+                    <IdcardOutlined /> Age: {userProfile?.age}
+                  </div>
+                  <div>
+                    <PhoneOutlined /> Phone: {userProfile?.contactNumber}
+                  </div>
+                  <div>
+                    <MailOutlined /> Email: {userProfile?.email}
+                  </div>
                 </div>
               </div>
               <div>{userProfile?.description}</div>
             </div>
             <div>
-              <h3
-                style={{
-                  width: "100%",
-                  textAlign: "center",
-                  borderBottom: "1px solid #000",
-                  lineHeight: "0.1em",
-                  margin: "20px 0 30px",
-                }}
-              >
-                <span style={{ padding: "0 10px", background: "#fff" }}>
-                  WORK EXPERIENCES
-                </span>
-              </h3>
+              <div style={{ margin: "0 7vw" }}>
+                <h3
+                  style={{
+                    width: "100%",
+                    textAlign: "center",
+                    borderBottom: "1px solid #000",
+                    lineHeight: "0.1em",
+                    margin: "20px 0",
+                  }}
+                >
+                  <span style={{ padding: "0 10px", background: "#fff" }}>
+                    WORK EXPERIENCES
+                  </span>
+                </h3>
+              </div>
               <div style={{ position: "relative" }}>
                 <EditOutlined
                   style={{
                     position: "absolute",
-                    top: "-20px",
+                    top: "-30px",
                     right: "10px",
                     fontSize: "clamp(18px, 2.5vw, 1.2rem)",
                     zIndex: 5,
