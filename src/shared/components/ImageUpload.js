@@ -54,20 +54,26 @@ const ImageUpload = (props) => {
         className={`image-upload ${props.center && "center"}`}
         style={{ background: file && !isValid ? "#ffd1d1" : "" }}
       >
-        <div className="image-upload__preview ">
+        <div
+          className="image-upload__preview"
+          style={{ border: previewUrl ? "" : "1px dashed #ccc" }}
+        >
           {!previewUrl && <p>Image Preview</p>}
           {previewUrl && (
             <div style={{ position: "relative" }}>
               <img src={previewUrl} alt="Preview" />
               <CloseCircleFilled
                 className="image-upload__preview-CloseCircleFilled"
-                onClick={() => setPreviewUrl(undefined)}
+                onClick={() => {
+                  setPreviewUrl(undefined);
+                  setFile(undefined);
+                }}
               />
             </div>
           )}
         </div>
         <Button type="button" onClick={pickImageHandler}>
-          SELECT IMAGE
+          {previewUrl ? "UPDATE IMAGE" : "SELECT IMAGE"}
         </Button>
       </div>
 
