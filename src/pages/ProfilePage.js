@@ -9,7 +9,7 @@ import LoadingSpinner from "../shared/components/LoadingSpinner";
 import ProfileIntro from "./profilePageSections/ProfileIntro";
 import WorkExperienceSection from "./profilePageSections/WorkExperienceSection";
 
-import { fetchProfile } from "../store/profile/action";
+// import { fetchProfile } from "../store/profile/action";
 
 import "./ProfilePage.css";
 import "antd/dist/antd.css";
@@ -25,7 +25,7 @@ const ProfilePage = (props) => {
   const [isOffline, setIsOffline] = useState();
 
   useEffect(() => {
-    dispatch(fetchProfile());
+    // dispatch(fetchProfile());
   }, [dispatch]);
 
   window.addEventListener("online", () => {

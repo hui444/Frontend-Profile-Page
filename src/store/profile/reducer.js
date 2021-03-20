@@ -1,6 +1,5 @@
 const initialState = {
   isLoading: false,
-  errorMessage: undefined,
   profile: undefined,
   workExperience: undefined,
   allWorkExperiences: undefined,
@@ -8,7 +7,6 @@ const initialState = {
 
 export const ACTION = {
   SET_IS_LOADING: "SET_IS_LOADING",
-  SET_ERROR_MESSAGE: "SET_ERROR_MESSAGE",
   GET_PROFILE_BY_PID: "GET_PROFILE_BY_PID",
   GET_WORK_EXPERIENCE_BY_WEID: "GET_WORK_EXPERIENCE_BY_WEID",
   GET_ALL_WORK_EXPERIENCE_BY_PID: "GET_ALL_WORK_EXPERIENCE_BY_PID",
@@ -20,12 +18,6 @@ export const profile = (state = initialState, action) => {
       return {
         ...state,
         isLoading: action.isLoading,
-      };
-    }
-    case ACTION.SET_ERROR_MESSAGE: {
-      return {
-        ...state,
-        errorMessage: action.errorMessage,
       };
     }
     case ACTION.GET_PROFILE_BY_PID: {
