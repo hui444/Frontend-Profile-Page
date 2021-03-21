@@ -35,7 +35,7 @@ const EditAllWorkExperiencesCard = () => {
 
   const confirmDelete = () => {
     console.log(selectedWorkExperience);
-    dispatch(deleteWorkExperience(selectedWorkExperience.weId));
+    dispatch(deleteWorkExperience(profileId, selectedWorkExperience.weId));
   };
 
   useEffect(() => {

@@ -239,6 +239,7 @@ export const createWorkExperience = (profileId, workExperience) => async (
     .then((resp) => {
       console.log(resp);
       success("Successfully created work experience!");
+      dispatch(getProfileById(profileId));
     })
     .catch((err) => console.log(err));
   dispatch(setIsLoading(false));
@@ -266,6 +267,7 @@ export const deleteWorkExperience = (profileId, weId) => async (dispatch) => {
     .then((resp) => {
       console.log(resp);
       success("Successfully deleted work experience!");
+      dispatch(getAllWorkExperiences(profileId));
     })
     .catch((err) => console.log(err));
   dispatch(setIsLoading(false));
