@@ -168,7 +168,9 @@ const ProfilePage = (props) => {
                     </div>
                   </div>
                 </div>
-                <div>{userProfile?.description}</div>
+                <div style={{ textAlign: "justify", whiteSpace: "pre-line" }}>
+                  {userProfile?.description}
+                </div>
               </div>
               <div>
                 <div
