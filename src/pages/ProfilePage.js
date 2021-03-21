@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 
 import { EditOutlined } from "@ant-design/icons";
 import { Alert } from "antd";
-// import CreateProfileCard from "../components/CreateProfileCard";
 import LoadingSpinner from "../shared/components/LoadingSpinner";
 import { imageUri } from "../assets/fallBackPlaceholder";
 import { getProfileById } from "../store/profile/action";
@@ -52,8 +51,6 @@ const ProfilePage = (props) => {
       );
   };
 
-  let personalInformationTitle;
-
   // if (!profile)
   //   return (
   //     <div style={{ display: "flex", flexDirection: "column" }}>
@@ -62,17 +59,6 @@ const ProfilePage = (props) => {
   //       {!isLoading && <CreateProfileCard />}
   //     </div>
   //   );
-  // else {
-  //   personalInformationTitle = [{ title: "Age", value: profile.age }];
-
-  //   if (profile.email)
-  //     personalInformationTitle.push({ title: "Email", value: profile.email });
-  //   if (profile.contactNumber)
-  //     personalInformationTitle.push({
-  //       title: "Contact Number",
-  //       value: profile.contactNumber,
-  //     });
-  // }
 
   const currentJob = userProfile?.workExperiences.filter((we) => {
     return we.isCurrentJob === true;
@@ -236,27 +222,6 @@ const ProfilePage = (props) => {
       )}
     </>
   );
-  // return (
-  //   <>
-  //     {errors()}
-  //     <div className="ProfilePage-main-container">
-  //       {isLoading && <LoadingSpinner asOverlay />}
-  //       {props.children}
-  //       <EditOutlined
-  //         className="ProfilePage-edit-icon"
-  //         onClick={() => {
-  //           history.push(`/${profile.id}/edit/intro`);
-  //         }}
-  //       />
-  //       <ProfileIntro
-  //         profileImage={profile.profileImage}
-  //         name={profile.name}
-  //         information={personalInformationTitle}
-  //       />
-  //       <WorkExperienceSection profileId={profile.id} />
-  //     </div>
-  //   </>
-  // );
 };
 
 export default ProfilePage;
