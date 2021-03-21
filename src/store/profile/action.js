@@ -2,6 +2,7 @@ import { ENDPOINTS } from "../../common/endpoints";
 import useSnackbar from "../../shared/hooks/useSnackbar";
 import { dummyProfile } from "../Stubs";
 import { ACTION } from "./reducer";
+import uuid from "react-uuid";
 
 export const getProfileById = () => async (dispatch) => {
   dispatch(setIsLoading(true));
@@ -82,19 +83,23 @@ export const getAllWorkExperiences = (profileId) => async (dispatch) => {
 export const editWorkExperienceById = (
   profileId,
   weId,
-  newWorkExperience
+  workExperience
 ) => async (dispatch) => {
   dispatch(setIsLoading(true));
   const [error] = useSnackbar("error");
   const [success] = useSnackbar("success");
 
+  const updatedWorkExperience = {
+    ...workExperience,
+    weId: weId,
+  };
   ///:profileId/workExperience/:workExperienceId
   await fetch(`${profileId}/workExperience/${weId}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(newWorkExperience),
+    body: JSON.stringify(updatedWorkExperience),
   })
     .then((resp) => {
       if (resp.status >= 400) {
@@ -178,13 +183,18 @@ export const createWorkExperience = (profileId, workExperience) => async (
   const [error] = useSnackbar("error");
   const [success] = useSnackbar("success");
 
+  const newWorkExperience = {
+    ...workExperience,
+    weId: uuid(),
+  };
+
   ///:profileId/create
   await fetch(`${ENDPOINTS.URL}/${profileId}/create`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(workExperience),
+    body: JSON.stringify(newWorkExperience),
   })
     .then((resp) => {
       if (resp.status >= 400) {
@@ -236,6 +246,10 @@ export const setSelectedWorkExperience = (selectedWorkExperience) => (
     type: ACTION.SET_SELECTED_WORK_EXPERIENCE,
     selectedWorkExperience: selectedWorkExperience,
   });
+};
+
+export const resetSelectedWorkExperience = () => (dispatch) => {
+  dispatch(setSelectedWorkExperience(undefined));
 };
 
 export const setIsLoading = (desiredState) => (dispatch) => {

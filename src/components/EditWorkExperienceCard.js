@@ -2,16 +2,23 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
+import _ from "lodash";
 
 import { Button, Switch } from "antd";
 import { CloseOutlined, CheckOutlined } from "@ant-design/icons";
 import Modal from "../shared/components/Modal";
 import ImageUpload from "../shared/components/ImageUpload";
 import LoadingSpinner from "../shared/components/LoadingSpinner";
+import { RED_ASTERISK } from "../common/constants";
+
+import {
+  editWorkExperienceById,
+  getWorkExperienceById,
+  resetSelectedWorkExperience,
+} from "../store/profile/action";
 
 import "./EditWorkExperienceCard.css";
 import "antd/dist/antd.css";
-import { RED_ASTERISK } from "../common/constants";
 
 const EditWorkExperienceCard = () => {
   const { handleSubmit, register, errors, watch } = useForm();
@@ -30,24 +37,44 @@ const EditWorkExperienceCard = () => {
   const workExperienceId = useParams().workExperienceId;
 
   useEffect(() => {
-    // dispatch(fetchWorkExperienceById(workExperienceId));
-    console.log(selectedWorkExperience);
-  }, [dispatch, workExperienceId]);
+    dispatch(getWorkExperienceById(profileId, workExperienceId));
+  }, [dispatch, profileId, workExperienceId]);
 
   const onSave = (values) => {
-    const finalImage = image ? image : selectedWorkExperience.companyLogo;
     if (!errors.length && !(image && !imageIsValid)) {
-      // dispatch(
-      //   updateSelectedWorkExperience(
-      //     values.companyName,
-      //     values.jobTitle,
-      //     values.jobDescription,
-      //     values.startDate,
-      //     values.endDate,
-      //     isCurrentJob,
-      //     finalImage
-      //   )
-      // );
+      const updatedWorkExperience = {
+        ...(values.companyName !== selectedWorkExperience.companyName && {
+          companyName: values.companyName,
+        }),
+        ...(values.jobTitle !== selectedWorkExperience.jobTitle && {
+          jobTitle: values.jobTitle,
+        }),
+        ...(values.jobDescription !== selectedWorkExperience.jobDescription && {
+          jobDescription: values.jobDescription,
+        }),
+        ...(values.startDate !== selectedWorkExperience.startDate && {
+          startDate: values.startDate,
+        }),
+        ...(values.endDate !== selectedWorkExperience.endDate && {
+          endDate: values.endDate,
+        }),
+        ...(isCurrentJob !== selectedWorkExperience.isCurrentJob && {
+          isCurrentJob: isCurrentJob,
+        }),
+        ...(image !== selectedWorkExperience.companyLogo && {
+          companyLogo: image,
+        }),
+      };
+      console.log(updatedWorkExperience);
+      if (!_.isEmpty(updatedWorkExperience)) {
+        dispatch(
+          editWorkExperienceById(
+            profileId,
+            selectedWorkExperience.weId,
+            updatedWorkExperience
+          )
+        );
+      }
       history.push(`/${profileId}/edit/workExperiences`);
     }
   };
@@ -190,9 +217,10 @@ const EditWorkExperienceCard = () => {
             <div className="EditIndivWorkExperienceModal-button-container">
               <Button
                 type="cancel"
-                onClick={() =>
-                  history.push(`/${profileId}/edit/workExperiences`)
-                }
+                onClick={() => {
+                  dispatch(resetSelectedWorkExperience());
+                  return history.push(`/${profileId}/edit/workExperiences`);
+                }}
               >
                 Cancel
               </Button>

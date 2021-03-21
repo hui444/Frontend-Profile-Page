@@ -9,6 +9,7 @@ import Modal from "../shared/components/Modal";
 
 import {
   deleteWorkExperience,
+  resetSelectedWorkExperience,
   setSelectedWorkExperience,
 } from "../store/profile/action";
 
@@ -71,9 +72,7 @@ const EditAllWorkExperiencesCard = () => {
                   <Popconfirm
                     title="Are you sure to delete this? You cannot undo this action."
                     onConfirm={confirmDelete}
-                    onCancel={() =>
-                      dispatch(setSelectedWorkExperience(undefined))
-                    }
+                    onCancel={() => dispatch(resetSelectedWorkExperience())}
                     okText="Delete"
                     cancelText="Cancel"
                   >
