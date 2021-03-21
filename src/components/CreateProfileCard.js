@@ -49,7 +49,7 @@ const CreateProfileCard = () => {
             placeholder="Name"
             name="name"
             ref={register({
-              required: "NAME REQUIRED!",
+              required: true,
               validate: (input) => input.trim().length !== 0,
             })}
             style={{
@@ -57,9 +57,8 @@ const CreateProfileCard = () => {
               background: errors.name && "#ffd1d1",
             }}
           />
-          {errors.name && <p>{errors.name.message}</p>}
-          {errors.name?.type === "validate" && (
-            <p>NAME CANNOT BE WHITESPACES!</p>
+          {(errors.name || errors.name?.type === "validate") && (
+            <p>Name Required!</p>
           )}
         </div>
 

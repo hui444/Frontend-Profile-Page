@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import CreateWorkExperienceCard from "./components/CreateWorkExperienceCard";
 import EditAllWorkExperiencesCard from "./components/EditAllWorkExperiencesCard";
 import EditProfileCard from "./components/EditProfileCard";
 
@@ -39,11 +40,11 @@ const App = () => {
       </Route>
 
       {/* create work experience */}
-      {/* <Route path={"/:profileId/create"}>
+      <Route path={"/:profileId/create"}>
         <ProfilePage>
-          <CreateWorkExperience />
+          <CreateWorkExperienceCard />
         </ProfilePage>
-      </Route> */}
+      </Route>
 
       {/* edit indiv work experience */}
       {/* <Route path={"/:profileId/edit/workExperience/:workExperienceId"}>

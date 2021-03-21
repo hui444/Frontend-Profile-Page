@@ -171,6 +171,36 @@ export const createProfile = (profile) => async (dispatch) => {
   dispatch(setIsLoading(false));
 };
 
+export const createWorkExperience = (profileId, workExperience) => async (
+  dispatch
+) => {
+  dispatch(setIsLoading(true));
+  const [error] = useSnackbar("error");
+  const [success] = useSnackbar("success");
+
+  ///:profileId/create
+  await fetch(`${ENDPOINTS.URL}/${profileId}/create`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(workExperience),
+  })
+    .then((resp) => {
+      if (resp.status >= 400) {
+        console.log(resp);
+        throw error("Failed to create work experience, please try again.");
+      } else {
+        return resp.json();
+      }
+    })
+    .then((resp) => {
+      console.log(resp);
+      success("Successfully created work experience!");
+    })
+    .catch((err) => console.log(err));
+  dispatch(setIsLoading(false));
+};
 export const deleteWorkExperience = (profileId, weId) => async (dispatch) => {
   dispatch(setIsLoading(true));
   const [error] = useSnackbar("error");
