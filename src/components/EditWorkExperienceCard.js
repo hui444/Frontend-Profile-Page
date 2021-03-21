@@ -38,10 +38,11 @@ const EditWorkExperienceCard = () => {
 
   useEffect(() => {
     dispatch(getWorkExperienceById(profileId, workExperienceId));
+    console.log(selectedWorkExperience?.isCurrentJob);
   }, [dispatch, profileId, workExperienceId]);
 
   const onSave = (values) => {
-    if (!errors.length && !(image && !imageIsValid)) {
+    if (!errors.length && imageIsValid) {
       const updatedWorkExperience = {
         ...(values.companyName !== selectedWorkExperience.companyName && {
           companyName: values.companyName,
@@ -55,9 +56,10 @@ const EditWorkExperienceCard = () => {
         ...(values.startDate !== selectedWorkExperience.startDate && {
           startDate: values.startDate,
         }),
-        ...(values.endDate !== selectedWorkExperience.endDate && {
-          endDate: values.endDate,
-        }),
+        ...(values.endDate &&
+          values.endDate !== selectedWorkExperience.endDate && {
+            endDate: values.endDate,
+          }),
         ...(isCurrentJob !== selectedWorkExperience.isCurrentJob && {
           isCurrentJob: isCurrentJob,
         }),
@@ -65,6 +67,7 @@ const EditWorkExperienceCard = () => {
           companyLogo: image,
         }),
       };
+      console.log(selectedWorkExperience);
       console.log(updatedWorkExperience);
       if (!_.isEmpty(updatedWorkExperience)) {
         dispatch(

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
@@ -9,6 +9,8 @@ import Modal from "../shared/components/Modal";
 
 import {
   deleteWorkExperience,
+  getAllWorkExperiences,
+  getProfileById,
   resetSelectedWorkExperience,
   setSelectedWorkExperience,
 } from "../store/profile/action";
@@ -17,15 +19,17 @@ import "./EditAllWorkExperiencesCard.css";
 import "antd/dist/antd.css";
 
 const EditAllWorkExperiencesCard = () => {
-  const { userProfile, selectedWorkExperience } = useSelector(
+  const { allWorkExperiences, selectedWorkExperience } = useSelector(
     (state) => state.profile
   );
   const history = useHistory();
   const dispatch = useDispatch();
   const profileId = useParams().profileId;
-  const list = userProfile?.workExperiences;
+  const list = allWorkExperiences;
 
   const onSave = () => {
+    dispatch(getProfileById(profileId));
+    dispatch(getAllWorkExperiences(profileId));
     history.push("/");
   };
 
@@ -33,6 +37,10 @@ const EditAllWorkExperiencesCard = () => {
     console.log(selectedWorkExperience);
     dispatch(deleteWorkExperience(selectedWorkExperience.weId));
   };
+
+  useEffect(() => {
+    dispatch(getAllWorkExperiences(profileId));
+  }, [dispatch]);
 
   return (
     <Modal>

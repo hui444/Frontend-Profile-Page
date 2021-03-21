@@ -25,7 +25,6 @@ const EditProfileCard = () => {
 
   const onSubmit = (values) => {
     console.log(errors);
-    console.log(image);
     if (!errors.length && !(image && !imageIsValid)) {
       if (values.email === "" && userProfile?.email !== undefined) {
         values.email = null;
@@ -44,7 +43,6 @@ const EditProfileCard = () => {
         values.contactNumber = undefined;
       }
 
-      console.log(userProfile?.email);
       const updatedProfile = {
         ...(values.name !== userProfile?.name && { name: values.name }),
         ...(values.age !== userProfile?.age && {

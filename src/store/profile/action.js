@@ -104,7 +104,7 @@ export const getAllWorkExperiences = (profileId) => async (dispatch) => {
     .then((resp) => {
       dispatch({
         type: ACTION.GET_ALL_WORK_EXPERIENCE_BY_PID,
-        allWorkExperiences: resp.allWorkExperiences,
+        allWorkExperiences: resp.workExperiences,
       });
     })
     .catch((err) => console.log(err));
@@ -120,17 +120,15 @@ export const editWorkExperienceById = (
   const [error] = useSnackbar("error");
   const [success] = useSnackbar("success");
 
-  const updatedWorkExperience = {
-    ...workExperience,
-    weId: weId,
-  };
+  console.log(`${profileId}/workExperience/${weId}`);
+  console.log(workExperience);
   ///:profileId/workExperience/:workExperienceId
-  await fetch(`${profileId}/workExperience/${weId}`, {
+  await fetch(`${ENDPOINTS.URL}/${profileId}/workExperience/${weId}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(updatedWorkExperience),
+    body: JSON.stringify(workExperience),
   })
     .then((resp) => {
       if (resp.status >= 400) {

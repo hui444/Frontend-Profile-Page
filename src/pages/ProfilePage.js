@@ -34,7 +34,7 @@ const ProfilePage = (props) => {
   useEffect(() => {
     dispatch(getProfileById(profileId));
     console.log(userProfile);
-  }, []);
+  }, [dispatch]);
 
   window.addEventListener("online", () => {
     setIsOffline(false);
@@ -133,7 +133,13 @@ const ProfilePage = (props) => {
                     }}
                   >
                     <img
-                      style={{ width: "100%", height: "100%" }}
+                      style={{
+                        maxWidth: "100%",
+                        maxHeight: "100%",
+                        width: "auto",
+                        height: "auto",
+                        display: "block",
+                      }}
                       src={userProfile?.profileImage ?? imageUri}
                       alt="Profile"
                     />
@@ -154,10 +160,11 @@ const ProfilePage = (props) => {
                       <IdcardOutlined /> Age: {userProfile?.age}
                     </div>
                     <div>
-                      <PhoneOutlined /> Phone: {userProfile?.contactNumber}
+                      <PhoneOutlined /> Phone:{" "}
+                      {userProfile?.contactNumber ?? "-"}
                     </div>
                     <div>
-                      <MailOutlined /> Email: {userProfile?.email}
+                      <MailOutlined /> Email: {userProfile?.email ?? "-"}
                     </div>
                   </div>
                 </div>

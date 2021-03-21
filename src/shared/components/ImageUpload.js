@@ -5,15 +5,20 @@ import { Button } from "antd";
 import "./ImageUpload.css";
 import "antd/dist/antd.css";
 import { CloseCircleFilled } from "@ant-design/icons";
+import { ImageToUri } from "../../common/imageToUri";
+import useSnackbar from "../hooks/useSnackbar";
 
 const ImageUpload = (props) => {
   const [file, setFile] = useState();
   const [previewUrl, setPreviewUrl] = useState(props.defaultValue);
   const [isValid, setIsValid] = useState(false);
+  const [error] = useSnackbar("error");
 
   const filePickerRef = useRef();
   useEffect(() => {
     if (!file) {
+      props.onInput(props.defaultValue);
+      props.isValid(true);
       return;
     }
     const fileReader = new FileReader();
@@ -23,7 +28,7 @@ const ImageUpload = (props) => {
     fileReader.readAsDataURL(file);
   }, [file]);
 
-  const pickedHandler = (event) => {
+  const pickedHandler = async (event) => {
     let pickedFile;
     if (event.target.files && event.target.files.length === 1) {
       pickedFile = event.target.files[0];
@@ -31,9 +36,16 @@ const ImageUpload = (props) => {
       const x = /(jpe?g|png)/i;
       const inputValidity = x.test(event.target.files[0].type);
       setIsValid(inputValidity);
-      props.isValid(inputValidity);
+      if (pickedFile.size > 50000) {
+        setIsValid(false);
+        props.isValid(false);
+        error("Selected image is too large!");
+      } else {
+        props.isValid(inputValidity);
+      }
     }
-    props.onInput(pickedFile);
+    const imageUri = await ImageToUri(pickedFile);
+    props.onInput(imageUri);
   };
 
   const pickImageHandler = () => {
@@ -75,7 +87,7 @@ const ImageUpload = (props) => {
                 onClick={() => {
                   setPreviewUrl(undefined);
                   setFile(undefined);
-                  props.onInput(undefined);
+                  props.onInput(null);
                 }}
               />
             </div>
