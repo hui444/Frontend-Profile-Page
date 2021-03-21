@@ -4,14 +4,12 @@ import { dummyProfile } from "../Stubs";
 import { ACTION } from "./reducer";
 
 export const getProfileById = () => async (dispatch) => {
-  console.log("hello");
   dispatch(setIsLoading(true));
   // const [error] = useSnackbar("error");
   await dispatch({
     type: ACTION.GET_PROFILE_BY_PID,
     userProfile: dummyProfile,
   });
-  console.log("this passed");
   //uncomment when linked
   // await fetch(`${ENDPOINTS.URL}/${profileId}`)
   //   .then((resp) => {
@@ -30,7 +28,6 @@ export const getProfileById = () => async (dispatch) => {
   //   })
   //   .catch((err) => console.log(err));
   dispatch(setIsLoading(false));
-  console.log("hi");
 };
 
 export const getWorkExperienceById = (profileId, weId) => async (dispatch) => {
@@ -41,7 +38,7 @@ export const getWorkExperienceById = (profileId, weId) => async (dispatch) => {
     .then((resp) => {
       if (resp.status >= 400) {
         console.log(resp);
-        error("Failed to fetch work experience, please try again later.");
+        throw error("Failed to fetch work experience, please try again later.");
       } else {
         return resp.json();
       }
@@ -65,7 +62,9 @@ export const getAllWorkExperiences = (profileId) => async (dispatch) => {
     .then((resp) => {
       if (resp.status >= 400) {
         console.log(resp);
-        error("Failed to get your work experiences, please try again later.");
+        throw error(
+          "Failed to get your work experiences, please try again later."
+        );
       } else {
         return resp.json();
       }
@@ -100,7 +99,7 @@ export const editWorkExperienceById = (
     .then((resp) => {
       if (resp.status >= 400) {
         console.log(resp);
-        error("Failed to update work experience, please try again.");
+        throw error("Failed to update work experience, please try again.");
       } else {
         return resp.json();
       }
@@ -129,8 +128,7 @@ export const editProfileById = (profileId, newProfile) => async (dispatch) => {
   })
     .then((resp) => {
       if (resp.status >= 400) {
-        console.log(resp);
-        error("Failed to update profile, please try again.");
+        throw error("Failed to update profile, please try again.");
       } else {
         return resp.json();
       }
@@ -160,7 +158,7 @@ export const createProfile = (profile) => async (dispatch) => {
     .then((resp) => {
       if (resp.status >= 400) {
         console.log(resp);
-        error("Failed to create profile, please try again.");
+        throw error("Failed to create profile, please try again.");
       } else {
         return resp.json();
       }
@@ -188,7 +186,7 @@ export const deleteWorkExperience = (profileId, weId) => async (dispatch) => {
     .then((resp) => {
       if (resp.status >= 400) {
         console.log(resp);
-        error("Failed to delete work experience, please try again.");
+        throw error("Failed to delete work experience, please try again.");
       } else {
         return resp.json();
       }

@@ -1,4 +1,7 @@
+export const dummyProfileId = "1";
+
 export const dummyProfile = {
+  id: dummyProfileId,
   hasCurrentJob: true,
   name: "Hui Hui",
   age: 20,

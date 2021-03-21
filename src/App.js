@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import EditProfileCard from "./components/EditProfileCard";
 
 import LoadingSpinner from "./shared/components/LoadingSpinner";
 import ErrorPage from "./shared/pages/ErrorPage";
@@ -25,12 +26,12 @@ const App = () => {
   const routes = (
     <Switch>
       <Route path={"/"} exact component={ProfilePage} />
-      {/* <Route path={"/:profileId/edit/intro"}>
+      <Route path={"/:profileId/edit/intro"}>
         <ProfilePage>
-          <EditProfileModal />
+          <EditProfileCard />
         </ProfilePage>
       </Route>
-      <Route path={"/:profileId/edit/workExperiences"}>
+      {/*<Route path={"/:profileId/edit/workExperiences"}>
         <ProfilePage>
           <EditExperienceModal />
         </ProfilePage>

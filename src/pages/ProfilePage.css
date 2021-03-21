@@ -1,12 +1,3 @@
-.ProfilePage-edit-icon {
-  font-size: 30px;
-  position: absolute;
-  right: 0;
-  padding: 10px;
-  outline-style: none;
-  font-size: clamp(30px, 5vw, 55px);
-}
-
 .profilePage-topContainer {
   position: relative;
   height: 250px;

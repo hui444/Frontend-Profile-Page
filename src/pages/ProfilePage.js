@@ -78,18 +78,21 @@ const ProfilePage = (props) => {
     <>
       {errors()}
       {isLoading && <LoadingSpinner />}
+      {props.children}
       {!isLoading && (
         <>
           <div style={{ position: "relative" }}>
             <EditOutlined
               style={{
                 position: "absolute",
-                top: "10px",
-                right: "10px",
-                fontSize: "clamp(18px, 2.5vw, 1.2rem)",
+                top: 0,
+                right: 0,
+                fontSize: "clamp(18px, 2.5vw, 1.5rem)",
                 zIndex: 5,
                 color: "white",
+                margin: "clamp(10px, 2vw, 20px)",
               }}
+              onClick={() => history.push("/:profileId/edit/intro")}
             />
             <div className="profilePage-topContainer">
               <div className="profilePage-topContainer-inside">
@@ -165,10 +168,18 @@ const ProfilePage = (props) => {
               <div>{userProfile?.description}</div>
             </div>
             <div>
-              <div style={{ margin: "0 7vw" }}>
+              <div
+                style={{
+                  margin: "0 0 0 5vw",
+                  position: "relative",
+                  display: "flex",
+                  flexDirection: "row",
+                  width: "95vw",
+                }}
+              >
                 <h3
                   style={{
-                    width: "100%",
+                    width: "90vw",
                     textAlign: "center",
                     borderBottom: "1px solid #000",
                     lineHeight: "0.1em",
@@ -179,18 +190,15 @@ const ProfilePage = (props) => {
                     WORK EXPERIENCES
                   </span>
                 </h3>
-              </div>
-              <div style={{ position: "relative" }}>
                 <EditOutlined
                   style={{
-                    position: "absolute",
-                    top: "-30px",
-                    right: "10px",
-                    fontSize: "clamp(18px, 2.5vw, 1.2rem)",
-                    zIndex: 5,
+                    fontSize: "clamp(18px, 2.5vw, 1.5rem)",
                     color: "black",
+                    margin: "10px",
                   }}
                 />
+              </div>
+              <div style={{ position: "relative" }}>
                 <div
                   style={{
                     display: "flex",
