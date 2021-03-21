@@ -26,7 +26,8 @@ const EditProfileCard = () => {
 
   const profileId = dummyProfileId;
   const onSubmit = (values) => {
-    const finalImage = image ? image : userProfile?.profileImage;
+    console.log(errors);
+    console.log(image);
     if (!errors.length && !(image && !imageIsValid)) {
       const updatedProfile = {
         ...(values.name !== userProfile?.name && { name: values.name }),
@@ -38,8 +39,8 @@ const EditProfileCard = () => {
         ...(values.description !== userProfile?.description && {
           description: values.description,
         }),
-        ...(finalImage !== userProfile?.profileImage && {
-          profileImage: finalImage,
+        ...(image !== userProfile?.profileImage && {
+          profileImage: image,
         }),
       };
 

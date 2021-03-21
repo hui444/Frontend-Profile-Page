@@ -50,15 +50,23 @@ const ImageUpload = (props) => {
         accept=".jpg,.png,.jpeg"
         onChange={pickedHandler}
       />
-      <div
-        className={`image-upload ${props.center && "center"}`}
-        style={{ background: file && !isValid ? "#ffd1d1" : "" }}
-      >
+      <div className={`image-upload ${props.center && "center"}`}>
         <div
           className="image-upload__preview"
-          style={{ border: previewUrl ? "" : "1px dashed #ccc" }}
+          style={{
+            border: previewUrl
+              ? isValid
+                ? ""
+                : "1px dashed #ccc"
+              : "1px dashed #ccc",
+            background: file && !isValid ? "#ffd1d1" : "",
+          }}
         >
-          {!previewUrl && <p>Image Preview</p>}
+          {!previewUrl && (
+            <em style={{ fontStyle: "normal", color: "cornflowerblue" }}>
+              Image Preview
+            </em>
+          )}
           {previewUrl && (
             <div style={{ position: "relative" }}>
               <img src={previewUrl} alt="Preview" />
@@ -67,6 +75,7 @@ const ImageUpload = (props) => {
                 onClick={() => {
                   setPreviewUrl(undefined);
                   setFile(undefined);
+                  props.onInput(undefined);
                 }}
               />
             </div>
@@ -77,7 +86,7 @@ const ImageUpload = (props) => {
         </Button>
       </div>
 
-      {file && !isValid && <p>INVALID IMAGE!</p>}
+      {file && !isValid && <p>Invalid Image!</p>}
     </div>
   );
 };
