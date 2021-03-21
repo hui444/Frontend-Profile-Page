@@ -9,10 +9,11 @@ const middlewares = [thunk];
 
 const persistedState = loadState();
 
-export const rootReducer = combineReducers({ profile, persistedState });
+export const rootReducer = combineReducers({ profile });
 
 const store = createStore(
   rootReducer,
+  persistedState,
   composeWithDevTools(applyMiddleware(...middlewares))
 );
 

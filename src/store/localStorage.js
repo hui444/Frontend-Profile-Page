@@ -1,4 +1,3 @@
-// localStorage.js
 export const loadState = () => {
   try {
     const serializedState = localStorage.getItem("state");
@@ -12,7 +11,6 @@ export const loadState = () => {
   }
 };
 
-// localStorage.js
 export const saveState = (state) => {
   try {
     const serializedState = JSON.stringify(state);

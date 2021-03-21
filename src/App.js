@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import CreateWorkExperienceCard from "./components/CreateWorkExperienceCard";
 import EditAllWorkExperiencesCard from "./components/EditAllWorkExperiencesCard";
 import EditProfileCard from "./components/EditProfileCard";
+import EditWorkExperienceCard from "./components/EditWorkExperienceCard";
 
 import LoadingSpinner from "./shared/components/LoadingSpinner";
 import ErrorPage from "./shared/pages/ErrorPage";
@@ -47,11 +48,11 @@ const App = () => {
       </Route>
 
       {/* edit indiv work experience */}
-      {/* <Route path={"/:profileId/edit/workExperience/:workExperienceId"}>
+      <Route path={"/:profileId/edit/workExperience/:workExperienceId"}>
         <ProfilePage>
-          <EditIndivWorkExperienceModal />
+          <EditWorkExperienceCard />
         </ProfilePage>
-      </Route> */}
+      </Route>
 
       <Route>
         <ErrorPage />
