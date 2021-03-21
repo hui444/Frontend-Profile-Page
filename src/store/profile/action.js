@@ -199,6 +199,15 @@ export const deleteWorkExperience = (profileId, weId) => async (dispatch) => {
   dispatch(setIsLoading(false));
 };
 
+export const setSelectedWorkExperience = (selectedWorkExperience) => (
+  dispatch
+) => {
+  dispatch({
+    type: ACTION.SET_SELECTED_WORK_EXPERIENCE,
+    selectedWorkExperience: selectedWorkExperience,
+  });
+};
+
 export const setIsLoading = (desiredState) => (dispatch) => {
   dispatch({ type: ACTION.SET_IS_LOADING, isLoading: desiredState });
 };

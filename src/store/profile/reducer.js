@@ -3,6 +3,7 @@ const initialState = {
   userProfile: undefined,
   workExperience: undefined,
   allWorkExperiences: undefined,
+  selectedWorkExperience: undefined,
 };
 
 export const ACTION = {
@@ -10,6 +11,7 @@ export const ACTION = {
   GET_PROFILE_BY_PID: "GET_PROFILE_BY_PID",
   GET_WORK_EXPERIENCE_BY_WEID: "GET_WORK_EXPERIENCE_BY_WEID",
   GET_ALL_WORK_EXPERIENCE_BY_PID: "GET_ALL_WORK_EXPERIENCE_BY_PID",
+  SET_SELECTED_WORK_EXPERIENCE: "SET_SELECTED_WORK_EXPERIENCE",
 };
 
 export const profile = (state = initialState, action) => {
@@ -36,6 +38,12 @@ export const profile = (state = initialState, action) => {
       return {
         ...state,
         allWorkExperiences: action.allWorkExperiences,
+      };
+    }
+    case ACTION.SET_SELECTED_WORK_EXPERIENCE: {
+      return {
+        ...state,
+        selectedWorkExperience: action.selectedWorkExperience,
       };
     }
     default:

@@ -196,6 +196,9 @@ const ProfilePage = (props) => {
                     color: "black",
                     margin: "10px",
                   }}
+                  onClick={() =>
+                    history.push("/:profileId/edit/workExperiences")
+                  }
                 />
               </div>
               <div style={{ position: "relative" }}>

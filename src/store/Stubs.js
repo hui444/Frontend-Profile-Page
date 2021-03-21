@@ -21,6 +21,7 @@ export const dummyProfile = {
         "Year 2 Computer Engineering, I rly like what I do! i think.. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lacinia, elit ut egestas blandit, dui tellus imperdiet est, luctus scelerisque ligula augue ut elit. Suspendisse laoreet massa mauris, eu mollis ligula lobortis quis. Donec feugiat, diam sit amet ullamcorper rhoncus, nisi nisi posuere lectus, ut tempor sem dui eget mauris. Cras dui ligula, rutrum vel pellentesque id, dapibus id felis. Vivamus sed scelerisque nisi. Quisque vel quam erat. Suspendisse vitae auctor urna, et tincidunt lectus. Donec non tempus arcu. Nunc non metus quis massa viverra faucibus et sed arcu. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas suscipit ligula sed faucibus convallis. Curabitur lectus lorem, bibendum ac posuere sit amet, finibus a dolor. Donec et ex egestas, vehicula massa ac, mollis ipsum. Suspendisse in feugiat metus. Nullam fringilla neque id mauris ultricies consequat. Curabitur vel dolor sed tellus faucibus cursus.",
       startDate: "2019-08",
       isCurrentJob: true,
+      weId: "100",
     },
     {
       companyName: "1919 Waterboat House",
@@ -29,6 +30,7 @@ export const dummyProfile = {
         "I do some things there,, its quite boring and the politics there is crazy..",
       startDate: "2019-02",
       endDate: "2019-04",
+      weId: "101",
     },
     {
       companyName: "Ichiban Sushi",
@@ -37,6 +39,7 @@ export const dummyProfile = {
         "I hated this place! it sucked... except for maybe the aunty bc she was super nice to me",
       startDate: "2019-01",
       endDate: "2019-04",
+      weId: "102",
     },
   ],
 };
