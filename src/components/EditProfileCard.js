@@ -27,11 +27,33 @@ const EditProfileCard = () => {
     console.log(errors);
     console.log(image);
     if (!errors.length && !(image && !imageIsValid)) {
+      if (values.email === "" && userProfile?.email !== undefined) {
+        values.email = null;
+      } else if (values.email === "" && userProfile?.email === undefined) {
+        values.email = undefined;
+      }
+      if (
+        values.contactNumber === "" &&
+        userProfile?.contactNumber !== undefined
+      ) {
+        values.contactNumber = null;
+      } else if (
+        values.contactNumber === "" &&
+        userProfile?.contactNumber === undefined
+      ) {
+        values.contactNumber = undefined;
+      }
+
+      console.log(userProfile?.email);
       const updatedProfile = {
         ...(values.name !== userProfile?.name && { name: values.name }),
-        ...(Number(values.age) !== userProfile?.age && { age: values.age }),
-        ...(values.email !== userProfile?.email && { email: values.email }),
-        ...(Number(values.contactNumber) !== userProfile?.contactNumber && {
+        ...(values.age !== userProfile?.age && {
+          age: values.age,
+        }),
+        ...(values.email !== userProfile?.email && {
+          email: values.email,
+        }),
+        ...(values.contactNumber !== userProfile?.contactNumber && {
           contactNumber: values.contactNumber,
         }),
         ...(values.description !== userProfile?.description && {

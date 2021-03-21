@@ -11,6 +11,8 @@ import ImageUpload from "../shared/components/ImageUpload";
 
 import "./CreateProfileCard.css";
 import "antd/dist/antd.css";
+import { RED_ASTERISK } from "../common/constants";
+import { createProfile } from "../store/profile/action";
 
 const CreateProfileCard = () => {
   const { handleSubmit, register, errors } = useForm();
@@ -21,15 +23,15 @@ const CreateProfileCard = () => {
 
   const onSubmit = (values) => {
     if (!errors.length && !(image && !imageIsValid)) {
-      //   dispatch(
-      //     createProfile(
-      //       values.name,
-      //       values.age,
-      //       values.email,
-      //       values.contactNumber,
-      //       image
-      //     )
-      //   );
+      const profile = {
+        name: values.name,
+        age: values.age,
+        description: values.description,
+        ...(values.contactNumber && { contactNumber: values.contactNumber }),
+        ...(values.email && { email: values.email }),
+        ...(image && { profileImage: image }),
+      };
+      dispatch(createProfile(profile));
       history.push("/");
     }
   };
@@ -41,9 +43,7 @@ const CreateProfileCard = () => {
           <h1>Create a profile!</h1>
         </div>
         <div className="CreateProfileCard-form-section">
-          <h4>
-            Name<em>*</em>
-          </h4>
+          <h4>Name{RED_ASTERISK}</h4>
           <input
             type="text"
             placeholder="Name"
@@ -63,9 +63,7 @@ const CreateProfileCard = () => {
         </div>
 
         <div className="CreateProfileCard-form-section">
-          <h4>
-            Age<em>*</em>
-          </h4>
+          <h4>Age{RED_ASTERISK}</h4>
           <input
             type="number"
             placeholder="Age"
@@ -110,6 +108,25 @@ const CreateProfileCard = () => {
             }}
           />
           {errors.contactNumber && <p>INVALID CONTACT NUMBER!</p>}
+        </div>
+
+        <div className="EditProfileModal-form-section">
+          <h4>Short Description{RED_ASTERISK}</h4>
+          <textarea
+            placeholder={"Short description about yourself.."}
+            name="description"
+            ref={register({
+              required: true,
+              validate: (input) => input.trim().length !== 0,
+            })}
+            style={{
+              borderColor: errors.description && "red",
+              background: errors.description && "#ffd1d1",
+            }}
+          />
+          {(errors.description || errors.description?.type === "validate") && (
+            <p>Description Required!</p>
+          )}
         </div>
 
         <div className="CreateProfileCard-form-section">
