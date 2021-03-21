@@ -20,7 +20,9 @@ import "antd/dist/antd.css";
 import WorkExperienceCard from "../components/WorkExperienceCard";
 
 const ProfilePage = (props) => {
-  const { userProfile, isLoading } = useSelector((state) => state.profile);
+  const { userProfile, isLoading, profileId } = useSelector(
+    (state) => state.profile
+  );
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -51,11 +53,11 @@ const ProfilePage = (props) => {
       );
   };
 
-  // if (!profile)
+  // if (!userProfile)
   //   return (
   //     <div style={{ display: "flex", flexDirection: "column" }}>
   //       {errors()}
-  //       {profile === null && isLoading && <LoadingSpinner asOverlay />}
+  //       {userProfile === null && isLoading && <LoadingSpinner asOverlay />}
   //       {!isLoading && <CreateProfileCard />}
   //     </div>
   //   );
@@ -82,7 +84,7 @@ const ProfilePage = (props) => {
                 color: "white",
                 margin: "clamp(10px, 2vw, 20px)",
               }}
-              onClick={() => history.push("/:profileId/edit/intro")}
+              onClick={() => history.push(`/${profileId}/edit/intro`)}
             />
             <div className="profilePage-topContainer">
               <div className="profilePage-topContainer-inside">
@@ -187,7 +189,7 @@ const ProfilePage = (props) => {
                     margin: "10px",
                   }}
                   onClick={() =>
-                    history.push("/:profileId/edit/workExperiences")
+                    history.push(`/${profileId}/edit/workExperiences`)
                   }
                 />
               </div>

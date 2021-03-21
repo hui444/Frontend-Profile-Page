@@ -12,7 +12,6 @@ import "./CreateWorkExperienceCard.css";
 import "antd/dist/antd.css";
 import { RED_ASTERISK } from "../common/constants";
 import { createWorkExperience } from "../store/profile/action";
-import { dummyProfileId } from "../store/Stubs";
 
 const CreateWorkExperienceCard = () => {
   const { handleSubmit, register, errors, watch } = useForm();
@@ -35,7 +34,7 @@ const CreateWorkExperienceCard = () => {
       ...(image && { companyLogo: image }),
     };
     if (!errors.length && !(image && !imageIsValid)) {
-      dispatch(createWorkExperience(dummyProfileId, newWorkExperience));
+      dispatch(createWorkExperience(profileId, newWorkExperience));
       history.push("/");
     }
   };

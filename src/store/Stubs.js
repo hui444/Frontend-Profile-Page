@@ -1,7 +1,5 @@
-export const dummyProfileId = "1";
-
 export const dummyProfile = {
-  id: dummyProfileId,
+  id: "1",
   name: "Hui Hui",
   age: 20,
   contactNumber: 93505092,

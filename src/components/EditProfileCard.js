@@ -9,7 +9,6 @@ import ImageUpload from "../shared/components/ImageUpload";
 import { Button } from "antd";
 import { RED_ASTERISK } from "../common/constants";
 
-import { dummyProfileId } from "../store/Stubs";
 import { editProfileById } from "../store/profile/action";
 
 import "./EditProfileCard.css";
@@ -17,14 +16,13 @@ import "antd/dist/antd.css";
 
 const EditProfileCard = () => {
   const { handleSubmit, register, errors } = useForm();
-  const { userProfile } = useSelector((state) => state.profile);
+  const { userProfile, profileId } = useSelector((state) => state.profile);
   const dispatch = useDispatch();
   const history = useHistory();
 
   const [image, setImage] = useState();
   const [imageIsValid, setImageIsValid] = useState();
 
-  const profileId = dummyProfileId;
   const onSubmit = (values) => {
     console.log(errors);
     console.log(image);

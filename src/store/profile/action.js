@@ -4,31 +4,37 @@ import { dummyProfile } from "../Stubs";
 import { ACTION } from "./reducer";
 import uuid from "react-uuid";
 
-export const getProfileById = () => async (dispatch) => {
+const setProfileId = (profileId) => (dispatch) => {
+  dispatch({
+    type: ACTION.SET_PROFILE_ID,
+    profileId: profileId,
+  });
+};
+
+export const getProfileById = (profileId) => async (dispatch) => {
   dispatch(setIsLoading(true));
-  // const [error] = useSnackbar("error");
+  const [error] = useSnackbar("error");
 
   await dispatch({
     type: ACTION.GET_PROFILE_BY_PID,
     userProfile: dummyProfile,
   });
-  //uncomment when linked
-  // await fetch(`${ENDPOINTS.URL}/${profileId}`)
-  //   .then((resp) => {
-  //     if (resp.status >= 400) {
-  //       console.log(resp);
-  //       error("Failed to fetch profile, please try again later.");
-  //     } else {
-  //       return resp.json();
-  //     }
-  //   })
-  //   .then((resp) => {
-  //     dispatch({
-  //       type: ACTION.GET_PROFILE_BY_PID,
-  //       profile: resp.profle,
-  //     });
-  //   })
-  //   .catch((err) => console.log(err));
+  await fetch(`${ENDPOINTS.URL}/${profileId}`)
+    .then((resp) => {
+      if (resp.status >= 400) {
+        console.log(resp);
+        error("Failed to fetch profile, please try again later.");
+      } else {
+        return resp.json();
+      }
+    })
+    .then((resp) => {
+      dispatch({
+        type: ACTION.GET_PROFILE_BY_PID,
+        profile: resp.profle,
+      });
+    })
+    .catch((err) => console.log(err.message));
   dispatch(setIsLoading(false));
 };
 
@@ -51,7 +57,7 @@ export const getWorkExperienceById = (profileId, weId) => async (dispatch) => {
         workExperience: resp.workExperience,
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err.message));
   dispatch(setIsLoading(false));
 };
 
@@ -77,7 +83,7 @@ export const getAllWorkExperiences = (profileId) => async (dispatch) => {
         allWorkExperiences: resp.allWorkExperiences,
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err.message));
   dispatch(setIsLoading(false));
 };
 
@@ -115,7 +121,7 @@ export const editWorkExperienceById = (
       success("Successfully updated work experience!");
       dispatch(getAllWorkExperiences(profileId));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err.message));
   dispatch(setIsLoading(false));
 };
 
@@ -144,7 +150,7 @@ export const editProfileById = (profileId, newProfile) => async (dispatch) => {
       success("Successfully updated profile!");
       dispatch(getProfileById(profileId));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err.message));
   dispatch(setIsLoading(false));
 };
 
@@ -172,8 +178,9 @@ export const createProfile = (profile) => async (dispatch) => {
     .then((resp) => {
       console.log(resp);
       success("Successfully created profile!");
+      dispatch(setProfileId(resp.profile.id));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err.message));
   dispatch(setIsLoading(false));
 };
 
@@ -209,7 +216,7 @@ export const createWorkExperience = (profileId, workExperience) => async (
       console.log(resp);
       success("Successfully created work experience!");
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err.message));
   dispatch(setIsLoading(false));
 };
 export const deleteWorkExperience = (profileId, weId) => async (dispatch) => {
@@ -236,7 +243,7 @@ export const deleteWorkExperience = (profileId, weId) => async (dispatch) => {
       console.log(resp);
       success("Successfully deleted work experience!");
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err.message));
   dispatch(setIsLoading(false));
 };
 
