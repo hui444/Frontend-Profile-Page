@@ -74,6 +74,10 @@ const ProfilePage = (props) => {
   //     });
   // }
 
+  const currentJob = userProfile?.workExperiences.filter((we) => {
+    return we.isCurrentJob === true;
+  });
+
   return (
     <>
       {errors()}
@@ -98,9 +102,9 @@ const ProfilePage = (props) => {
               <div className="profilePage-topContainer-inside">
                 <span style={{ fontSize: "30px" }}>Hello! I am</span>
                 <span style={{ fontSize: "60px" }}>{userProfile?.name}</span>
-                {userProfile?.hasCurrentJob && (
+                {currentJob.length === 1 && (
                   <span style={{ fontSize: "30px" }}>
-                    A {userProfile?.currentJob} at {userProfile?.currentCompany}
+                    A {currentJob[0].jobTitle} at {currentJob[0].companyName}
                   </span>
                 )}
               </div>

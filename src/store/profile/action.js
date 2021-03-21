@@ -7,6 +7,7 @@ import uuid from "react-uuid";
 export const getProfileById = () => async (dispatch) => {
   dispatch(setIsLoading(true));
   // const [error] = useSnackbar("error");
+
   await dispatch({
     type: ACTION.GET_PROFILE_BY_PID,
     userProfile: dummyProfile,
