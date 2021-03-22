@@ -37,7 +37,8 @@ textarea {
 .EditIndivWorkExperienceModal-form-section p,
 .EditIndivWorkExperienceModal-dates-container p {
   margin: 0;
-  color: #925bf8;
+  color: #dd1305;
+  text-align: end;
 }
 
 .EditIndivWorkExperienceModal-form-section {
