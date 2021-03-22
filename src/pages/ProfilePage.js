@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import _ from "lodash";
 
 import { EditOutlined } from "@ant-design/icons";
-import { Alert } from "antd";
 import LoadingSpinner from "../shared/components/LoadingSpinner";
 import { imageUri } from "../assets/fallBackPlaceholder";
-import { getProfileById } from "../store/profile/action";
+import { getAllWorkExperiences, getProfileById } from "../store/profile/action";
 import { toDisplayDateFormat } from "../common/dateMethods";
 import {
   UserOutlined,
@@ -29,50 +28,29 @@ const ProfilePage = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [isOffline, setIsOffline] = useState();
+  // const [isOffline, setIsOffline] = useState();
 
   useEffect(() => {
     dispatch(getProfileById(profileId));
-    console.log(userProfile);
+    dispatch(getAllWorkExperiences(profileId));
   }, [dispatch]);
-
-  window.addEventListener("online", () => {
-    setIsOffline(false);
-  });
-
-  window.addEventListener("offline", () => {
-    setIsOffline(true);
-  });
-
-  const errors = () => {
-    if (isOffline)
-      return (
-        <Alert
-          message="You are offline! Please connect to the internet before editing!"
-          banner
-        />
-      );
-  };
 
   if (_.isEmpty(userProfile) || userProfile === undefined) {
     console.log(userProfile);
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
-        {errors()}
         {userProfile === null && isLoading && <LoadingSpinner asOverlay />}
         {!isLoading && <CreateProfileCard />}
       </div>
     );
   } else {
-    console.log(userProfile);
-
     const currentJob = userProfile?.workExperiences.filter((we) => {
       return we.isCurrentJob === true;
     });
 
     return (
       <>
-        {errors()}
+        {/* {errors()} */}
         {isLoading && <LoadingSpinner asOverlay />}
         {props.children}
         {!isLoading && (

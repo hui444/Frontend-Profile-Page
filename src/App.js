@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import { OfflineStatus } from "./common/OfflineStatus";
 import CreateWorkExperienceCard from "./components/CreateWorkExperienceCard";
 import EditAllWorkExperiencesCard from "./components/EditAllWorkExperiencesCard";
 import EditProfileCard from "./components/EditProfileCard";
@@ -72,6 +73,7 @@ const App = () => {
               </div>
             }
           >
+            <OfflineStatus />
             {routes}
           </Suspense>
         </main>

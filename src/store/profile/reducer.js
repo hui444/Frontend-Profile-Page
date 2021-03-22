@@ -1,5 +1,7 @@
 const initialState = {
   isLoading: false,
+  isOffline: false,
+  offlineQueue: [],
   userProfile: undefined,
   workExperience: undefined,
   allWorkExperiences: undefined,
@@ -9,6 +11,8 @@ const initialState = {
 
 export const ACTION = {
   SET_IS_LOADING: "SET_IS_LOADING",
+  SET_IS_OFFLINE: "SET_IS_OFFLINE",
+  SET_OFFLINE_QUEUE: "SET_OFFLINE_QUEUE",
   GET_PROFILE_BY_PID: "GET_PROFILE_BY_PID",
   GET_WORK_EXPERIENCE_BY_WEID: "GET_WORK_EXPERIENCE_BY_WEID",
   GET_ALL_WORK_EXPERIENCE_BY_PID: "GET_ALL_WORK_EXPERIENCE_BY_PID",
@@ -22,6 +26,18 @@ export const profile = (state = initialState, action) => {
       return {
         ...state,
         isLoading: action.isLoading,
+      };
+    }
+    case ACTION.SET_IS_OFFLINE: {
+      return {
+        ...state,
+        isOffline: action.isOffline,
+      };
+    }
+    case ACTION.SET_OFFLINE_QUEUE: {
+      return {
+        ...state,
+        offlineQueue: action.offlineQueue,
       };
     }
     case ACTION.GET_PROFILE_BY_PID: {
