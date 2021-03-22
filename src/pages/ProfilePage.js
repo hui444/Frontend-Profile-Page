@@ -73,7 +73,7 @@ const ProfilePage = (props) => {
     return (
       <>
         {errors()}
-        {isLoading && <LoadingSpinner />}
+        {isLoading && <LoadingSpinner asOverlay />}
         {props.children}
         {!isLoading && (
           <>

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import ClampLines from "react-clamp-lines";
 
 import { Button } from "antd";
 import { imageUri } from "../assets/fallBackPlaceholder";
@@ -18,19 +19,17 @@ const WorkExperienceCard = (props) => {
             <b>{props.position}</b>
             <text>{props.company}</text>
             <text>{props.date}</text>
-            <p className="WorkExperienceCard-flip-card__front-right__description">
-              {props.description}
-            </p>
+            <ClampLines
+              text={props.description}
+              id="custom"
+              lines={4}
+              ellipsis="..."
+              moreText="Show more"
+              lessText="Show less"
+              className="custom-class"
+              innerElement="p"
+            />
           </div>
-        </div>
-        <div style={{ width: "25%", margin: "auto" }}>
-          <Button
-            block
-            style={{ borderRadius: "5px", height: "1.7rem" }}
-            size="small"
-          >
-            More Details
-          </Button>
         </div>
       </div>
     </>

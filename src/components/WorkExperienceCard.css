@@ -1,5 +1,5 @@
 .WorkExperienceCard-flip-card__main-container {
-  background-color: #fafaf4;
+  background-color: #e6f2fc; /* #f0f4f7; */
   color: black;
   border-radius: 5px;
   display: flex;
@@ -36,10 +36,17 @@
   width: 70%;
 }
 
-.WorkExperienceCard-flip-card__front-right__description {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  margin: 10px 0 0;
+.clamp-lines__button {
+  background: none;
+  border: 0;
+  color: dimgrey;
+  padding: 0;
+  margin: auto;
+  display: flex;
+  text-decoration: underline;
+  outline: none;
+}
+
+.clamp-lines > p {
+  margin: 0;
 }
