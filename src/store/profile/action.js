@@ -342,8 +342,10 @@ export const setOfflineQueue = (request) => (dispatch, getState) => {
   });
 };
 
-export const sendRequests = (allOfflineRequests) => {
-  allOfflineRequests.map(async (req) => {
+export const sendRequests = () => async (dispatch, getState) => {
+  const { offlineQueue } = getState().profile;
+
+  offlineQueue?.map(async (req) => {
     if (req.method === "DELETE") {
       await fetch(req.endpoint, {
         method: "DELETE",
@@ -365,5 +367,7 @@ export const sendRequests = (allOfflineRequests) => {
     }
   });
   //update stores
-  // dispatch(getProfileById())
+  const storedData = loadState();
+  dispatch(getProfileById(storedData.profile.profileId));
+  dispatch(getAllWorkExperiences(storedData.profile.profileId));
 };
