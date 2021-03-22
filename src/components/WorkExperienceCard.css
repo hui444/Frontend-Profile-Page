@@ -19,8 +19,8 @@
 }
 
 .WorkExperienceCard-flip-card__front-left img {
-  max-height: 10rem;
-  max-width: 10rem;
+  max-height: clamp(6rem, 20vw, 10rem);
+  max-width: clamp(6rem, 20vw, 10rem);
   width: auto;
   height: auto;
   display: block;

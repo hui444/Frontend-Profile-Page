@@ -3,14 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Alert, Button, notification } from "antd";
 import { sendRequests, setIsOffline } from "../store/profile/action";
+import { useHistory } from "react-router";
 
 export const OfflineStatus = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { isOffline, offlineQueue } = useSelector((state) => state.profile);
 
   window.addEventListener("online", () => {
     dispatch(setIsOffline(false));
-    console.log("im online!");
   });
 
   window.addEventListener("offline", () => {
@@ -30,6 +31,7 @@ export const OfflineStatus = () => {
         onClick={() => {
           notification.close(key);
           dispatch(sendRequests());
+          history.push("/");
         }}
       >
         Confirm
@@ -48,11 +50,11 @@ export const OfflineStatus = () => {
   };
 
   useEffect(() => {
-    if (!(!isOffline && offlineQueue?.length)) {
+    if (!isOffline && offlineQueue?.length) {
       console.log("yes it works");
       updateNotification();
     }
-  }, []);
+  }, [isOffline]);
 
   console.log(isOffline);
   if (isOffline)

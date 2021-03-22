@@ -28,8 +28,6 @@ const ProfilePage = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // const [isOffline, setIsOffline] = useState();
-
   useEffect(() => {
     dispatch(getProfileById(profileId));
     dispatch(getAllWorkExperiences(profileId));

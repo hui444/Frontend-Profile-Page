@@ -17,7 +17,6 @@ export const getProfileById = (profileId) => async (dispatch, getState) => {
 
   if (isOffline) {
     const storedData = loadState();
-    console.log(storedData.profile);
     dispatch({
       type: ACTION.GET_PROFILE_BY_PID,
       userProfile: storedData.profile.userProfile,
@@ -107,7 +106,6 @@ export const getAllWorkExperiences = (profileId) => async (
 
   if (isOffline) {
     const storedData = loadState();
-    console.log(storedData.profile);
     dispatch({
       type: ACTION.GET_ALL_WORK_EXPERIENCE_BY_PID,
       allWorkExperiences: storedData.profile.userProfile.workExperiences,
@@ -140,101 +138,133 @@ export const editWorkExperienceById = (
   profileId,
   weId,
   workExperience
-) => async (dispatch) => {
+) => async (dispatch, getState) => {
   dispatch(setIsLoading(true));
   const [error] = useSnackbar("error");
   const [success] = useSnackbar("success");
 
-  console.log(`${profileId}/workExperience/${weId}`);
-  console.log(workExperience);
-  ///:profileId/workExperience/:workExperienceId
-  await fetch(`${ENDPOINTS.URL}/${profileId}/workExperience/${weId}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(workExperience),
-  })
-    .then((resp) => {
-      if (resp.status >= 400) {
+  const { isOffline } = getState().profile;
+  if (isOffline) {
+    const req = {
+      endpoint: `${ENDPOINTS.URL}/${profileId}/workExperience/${weId}`,
+      method: "PATCH",
+      body: JSON.stringify(workExperience),
+    };
+    dispatch(setOfflineQueue(req));
+  } else {
+    ///:profileId/workExperience/:workExperienceId
+    await fetch(`${ENDPOINTS.URL}/${profileId}/workExperience/${weId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(workExperience),
+    })
+      .then((resp) => {
+        if (resp.status >= 400) {
+          console.log(resp);
+          throw error("Failed to update work experience, please try again.");
+        } else {
+          return resp.json();
+        }
+      })
+      .then((resp) => {
         console.log(resp);
-        throw error("Failed to update work experience, please try again.");
-      } else {
-        return resp.json();
-      }
-    })
-    .then((resp) => {
-      console.log(resp);
-      success("Successfully updated work experience!");
-      dispatch(getAllWorkExperiences(profileId));
-    })
-    .catch((err) => console.log(err));
+        success("Successfully updated work experience!");
+        dispatch(getAllWorkExperiences(profileId));
+      })
+      .catch((err) => console.log(err));
+  }
   dispatch(setIsLoading(false));
 };
 
-export const editProfileById = (profileId, newProfile) => async (dispatch) => {
+export const editProfileById = (profileId, newProfile) => async (
+  dispatch,
+  getState
+) => {
   dispatch(setIsLoading(true));
   const [error] = useSnackbar("error");
   const [success] = useSnackbar("success");
+  const { isOffline } = getState().profile;
 
-  ///:profileId
-  await fetch(`${ENDPOINTS.URL}/${profileId}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newProfile),
-  })
-    .then((resp) => {
-      if (resp.status >= 400) {
-        throw error("Failed to update profile, please try again.");
-      } else {
-        return resp.json();
-      }
+  if (isOffline) {
+    const req = {
+      endpoint: `${ENDPOINTS.URL}/${profileId}`,
+      method: "PATCH",
+      body: JSON.stringify(newProfile),
+    };
+    dispatch(setOfflineQueue(req));
+  } else {
+    ///:profileId
+    await fetch(`${ENDPOINTS.URL}/${profileId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newProfile),
     })
-    .then((resp) => {
-      console.log(resp);
-      success("Successfully updated profile!");
-      dispatch(getProfileById(profileId));
-    })
-    .catch((err) => console.log(err));
+      .then((resp) => {
+        if (resp.status >= 400) {
+          throw error("Failed to update profile, please try again.");
+        } else {
+          return resp.json();
+        }
+      })
+      .then((resp) => {
+        console.log(resp);
+        success("Successfully updated profile!");
+        dispatch(getProfileById(profileId));
+      })
+      .catch((err) => console.log(err));
+  }
   dispatch(setIsLoading(false));
 };
 
-export const createProfile = (profile) => async (dispatch) => {
+export const createProfile = (profile) => async (dispatch, getState) => {
   dispatch(setIsLoading(true));
   const [error] = useSnackbar("error");
   const [success] = useSnackbar("success");
+  const { isOffline } = getState().profile;
 
-  ///create
-  await fetch(`${ENDPOINTS.URL}/create`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(profile),
-  })
-    .then((resp) => {
-      if (resp.status >= 400) {
+  if (isOffline) {
+    const req = {
+      endpoint: `${ENDPOINTS.URL}/create`,
+      method: "POST",
+      body: JSON.stringify(profile),
+    };
+    dispatch(setOfflineQueue(req));
+  } else {
+    ///create
+    await fetch(`${ENDPOINTS.URL}/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(profile),
+    })
+      .then((resp) => {
+        if (resp.status >= 400) {
+          console.log(resp);
+          throw error("Failed to create profile, please try again.");
+        } else {
+          return resp.json();
+        }
+      })
+      .then((resp) => {
         console.log(resp);
-        throw error("Failed to create profile, please try again.");
-      } else {
-        return resp.json();
-      }
-    })
-    .then((resp) => {
-      console.log(resp);
-      console.log(resp.profile);
-      success("Successfully created profile!");
-      dispatch(getProfileById(resp.profile.id));
-      dispatch(setProfileId(resp.profile.id));
-    })
-    .catch((err) => console.log(err));
+        console.log(resp.profile);
+        success("Successfully created profile!");
+        dispatch(getProfileById(resp.profile.id));
+        dispatch(setProfileId(resp.profile.id));
+      })
+      .catch((err) => console.log(err));
+  }
   dispatch(setIsLoading(false));
 };
 
 export const createWorkExperience = (profileId, workExperience) => async (
-  dispatch
+  dispatch,
+  getState
 ) => {
   dispatch(setIsLoading(true));
   const [error] = useSnackbar("error");
@@ -245,28 +275,39 @@ export const createWorkExperience = (profileId, workExperience) => async (
     weId: uuid(),
   };
 
-  ///:profileId/create
-  await fetch(`${ENDPOINTS.URL}/${profileId}/create`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newWorkExperience),
-  })
-    .then((resp) => {
-      if (resp.status >= 400) {
+  const { isOffline } = getState().profile;
+
+  if (isOffline) {
+    const req = {
+      endpoint: `${ENDPOINTS.URL}/${profileId}/create`,
+      method: "POST",
+      body: JSON.stringify(newWorkExperience),
+    };
+    dispatch(setOfflineQueue(req));
+  } else {
+    ///:profileId/create
+    await fetch(`${ENDPOINTS.URL}/${profileId}/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newWorkExperience),
+    })
+      .then((resp) => {
+        if (resp.status >= 400) {
+          console.log(resp);
+          throw error("Failed to create work experience, please try again.");
+        } else {
+          return resp.json();
+        }
+      })
+      .then((resp) => {
         console.log(resp);
-        throw error("Failed to create work experience, please try again.");
-      } else {
-        return resp.json();
-      }
-    })
-    .then((resp) => {
-      console.log(resp);
-      success("Successfully created work experience!");
-      dispatch(getProfileById(profileId));
-    })
-    .catch((err) => console.log(err));
+        success("Successfully created work experience!");
+        dispatch(getProfileById(profileId));
+      })
+      .catch((err) => console.log(err));
+  }
   dispatch(setIsLoading(false));
 };
 
@@ -280,6 +321,12 @@ export const deleteWorkExperience = (profileId, weId) => async (
   const { isOffline } = getState().profile;
 
   if (isOffline) {
+    const req = {
+      endpoint: `${ENDPOINTS.URL}/${profileId}/workExperience/${weId}`,
+      method: "DELETE",
+      body: null,
+    };
+    dispatch(setOfflineQueue(req));
   } else {
     ///:profileId/workExperience/:workExperienceId
     await fetch(`${ENDPOINTS.URL}/${profileId}/workExperience/${weId}`, {
@@ -336,15 +383,22 @@ export const setIsOffline = (isOffline) => (dispatch) => {
 export const setOfflineQueue = (request) => (dispatch, getState) => {
   const { offlineQueue } = getState().profile;
 
+  console.log(offlineQueue);
+  console.log(request);
+  const updatedQueue = offlineQueue.concat(request);
+  console.log(updatedQueue);
   dispatch({
     type: ACTION.SET_OFFLINE_QUEUE,
-    offlineQueue: offlineQueue.push(request),
+    offlineQueue: updatedQueue,
   });
 };
 
-export const sendRequests = () => async (dispatch, getState) => {
-  const { offlineQueue } = getState().profile;
+export const sendRequests = () => async (dispatch) => {
+  dispatch(setIsLoading(true));
+  const offlineQueue = loadState().profile.offlineQueue;
+  console.log(offlineQueue);
 
+  console.log("passed through sendRequests");
   offlineQueue?.map(async (req) => {
     if (req.method === "DELETE") {
       await fetch(req.endpoint, {
@@ -354,6 +408,9 @@ export const sendRequests = () => async (dispatch, getState) => {
         },
       });
     } else if (req.method === ("PATCH" || "POST")) {
+      console.log(req.endpoint);
+      console.log(req.body);
+      console.log(req.method);
       await fetch(req.endpoint, {
         method: req.method,
         headers: {
@@ -361,13 +418,21 @@ export const sendRequests = () => async (dispatch, getState) => {
         },
         body: req.body,
       });
+      //update stores
+      const storedData = loadState();
+      console.log(storedData.profile.profileId);
+      dispatch(getProfileById(storedData.profile.profileId));
+      dispatch(getAllWorkExperiences(storedData.profile.profileId));
     } else {
       console.log(req); //ignore request
       return;
     }
   });
-  //update stores
-  const storedData = loadState();
-  dispatch(getProfileById(storedData.profile.profileId));
-  dispatch(getAllWorkExperiences(storedData.profile.profileId));
+
+  //clear offlineQueue
+  dispatch({
+    type: ACTION.SET_OFFLINE_QUEUE,
+    offlineQueue: [],
+  });
+  dispatch(setIsLoading(false));
 };
