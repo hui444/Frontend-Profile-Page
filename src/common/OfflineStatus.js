@@ -51,12 +51,10 @@ export const OfflineStatus = () => {
 
   useEffect(() => {
     if (!isOffline && offlineQueue?.length) {
-      console.log("yes it works");
       updateNotification();
     }
   }, [isOffline]);
 
-  console.log(isOffline);
   if (isOffline)
     return (
       <Alert

@@ -111,25 +111,48 @@ export const getAllWorkExperiences = (profileId) => async (
       allWorkExperiences: storedData.profile.userProfile.workExperiences,
     });
   } else {
-    // /:profileId/workExperience/all
-    await fetch(`${ENDPOINTS.URL}/${profileId}/workExperience/all`)
-      .then((resp) => {
-        if (resp.status >= 400) {
-          console.log(resp);
-          throw error(
-            "Failed to get your work experiences, please try again later."
-          );
-        } else {
-          return resp.json();
-        }
-      })
-      .then((resp) => {
-        dispatch({
-          type: ACTION.GET_ALL_WORK_EXPERIENCE_BY_PID,
-          allWorkExperiences: resp.workExperiences,
+    if (profileId === undefined) {
+      // /workExperiences
+      await fetch(`${ENDPOINTS.URL}/workExperiences`)
+        .then((resp) => {
+          if (resp.status >= 400) {
+            console.log(resp);
+          } else return resp.json();
+        })
+        .then((resp) => {
+          dispatch({
+            type: ACTION.GET_ALL_WORK_EXPERIENCE_BY_PID,
+            allWorkExperiences: resp.workExperiences,
+          });
+          dispatch(setProfileId(resp.profile.id));
+        })
+        .catch((err) => {
+          console.log(err);
+          dispatch({
+            type: ACTION.GET_ALL_WORK_EXPERIENCE_BY_PID,
+            allWorkExperiences: undefined,
+          });
         });
-      })
-      .catch((err) => console.log(err));
+    } else {
+      // /:profileId/workExperience/all
+      await fetch(`${ENDPOINTS.URL}/${profileId}/workExperience/all`)
+        .then((resp) => {
+          if (resp.status >= 400) {
+            throw error(
+              "Failed to get your work experiences, please try again later."
+            );
+          } else {
+            return resp.json();
+          }
+        })
+        .then((resp) => {
+          dispatch({
+            type: ACTION.GET_ALL_WORK_EXPERIENCE_BY_PID,
+            allWorkExperiences: resp.workExperiences,
+          });
+        })
+        .catch((err) => console.log(err));
+    }
   }
   dispatch(setIsLoading(false));
 };
@@ -169,7 +192,6 @@ export const editWorkExperienceById = (
         }
       })
       .then((resp) => {
-        console.log(resp);
         success("Successfully updated work experience!");
         dispatch(getAllWorkExperiences(profileId));
       })
@@ -211,7 +233,6 @@ export const editProfileById = (profileId, newProfile) => async (
         }
       })
       .then((resp) => {
-        console.log(resp);
         success("Successfully updated profile!");
         dispatch(getProfileById(profileId));
       })
@@ -251,8 +272,6 @@ export const createProfile = (profile) => async (dispatch, getState) => {
         }
       })
       .then((resp) => {
-        console.log(resp);
-        console.log(resp.profile);
         success("Successfully created profile!");
         dispatch(getProfileById(resp.profile.id));
         dispatch(setProfileId(resp.profile.id));
@@ -302,7 +321,6 @@ export const createWorkExperience = (profileId, workExperience) => async (
         }
       })
       .then((resp) => {
-        console.log(resp);
         success("Successfully created work experience!");
         dispatch(getProfileById(profileId));
       })
@@ -344,7 +362,6 @@ export const deleteWorkExperience = (profileId, weId) => async (
         }
       })
       .then((resp) => {
-        console.log(resp);
         success("Successfully deleted work experience!");
         dispatch(getAllWorkExperiences(profileId));
       })
@@ -371,7 +388,6 @@ export const setIsLoading = (desiredState) => (dispatch) => {
 };
 
 export const setIsOffline = (isOffline) => (dispatch) => {
-  console.log(isOffline);
   dispatch({ type: ACTION.SET_IS_OFFLINE, isOffline: isOffline });
 };
 
@@ -383,10 +399,7 @@ export const setIsOffline = (isOffline) => (dispatch) => {
 export const setOfflineQueue = (request) => (dispatch, getState) => {
   const { offlineQueue } = getState().profile;
 
-  console.log(offlineQueue);
-  console.log(request);
   const updatedQueue = offlineQueue.concat(request);
-  console.log(updatedQueue);
   dispatch({
     type: ACTION.SET_OFFLINE_QUEUE,
     offlineQueue: updatedQueue,
@@ -396,9 +409,7 @@ export const setOfflineQueue = (request) => (dispatch, getState) => {
 export const sendRequests = () => async (dispatch) => {
   dispatch(setIsLoading(true));
   const offlineQueue = loadState().profile.offlineQueue;
-  console.log(offlineQueue);
 
-  console.log("passed through sendRequests");
   offlineQueue?.map(async (req) => {
     if (req.method === "DELETE") {
       await fetch(req.endpoint, {
@@ -408,9 +419,6 @@ export const sendRequests = () => async (dispatch) => {
         },
       });
     } else if (req.method === ("PATCH" || "POST")) {
-      console.log(req.endpoint);
-      console.log(req.body);
-      console.log(req.method);
       await fetch(req.endpoint, {
         method: req.method,
         headers: {
@@ -420,7 +428,6 @@ export const sendRequests = () => async (dispatch) => {
       });
       //update stores
       const storedData = loadState();
-      console.log(storedData.profile.profileId);
       dispatch(getProfileById(storedData.profile.profileId));
       dispatch(getAllWorkExperiences(storedData.profile.profileId));
     } else {

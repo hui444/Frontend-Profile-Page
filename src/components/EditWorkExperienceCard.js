@@ -38,7 +38,6 @@ const EditWorkExperienceCard = () => {
 
   useEffect(() => {
     dispatch(getWorkExperienceById(profileId, workExperienceId));
-    console.log(selectedWorkExperience?.isCurrentJob);
   }, [dispatch, profileId, workExperienceId]);
 
   const onSave = (values) => {
@@ -67,8 +66,6 @@ const EditWorkExperienceCard = () => {
           companyLogo: image,
         }),
       };
-      console.log(selectedWorkExperience);
-      console.log(updatedWorkExperience);
       if (!_.isEmpty(updatedWorkExperience)) {
         dispatch(
           editWorkExperienceById(

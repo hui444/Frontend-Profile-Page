@@ -34,7 +34,6 @@ const EditAllWorkExperiencesCard = () => {
   };
 
   const confirmDelete = () => {
-    console.log(selectedWorkExperience);
     dispatch(deleteWorkExperience(profileId, selectedWorkExperience.weId));
   };
 
