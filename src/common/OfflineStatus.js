@@ -2,7 +2,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Alert, Button, notification } from "antd";
-import { sendRequests, setIsOffline } from "../store/profile/action";
+import {
+  clearOfflineQueue,
+  sendRequests,
+  setIsOffline,
+} from "../store/profile/action";
 import { useHistory } from "react-router";
 
 export const OfflineStatus = () => {
@@ -20,7 +24,7 @@ export const OfflineStatus = () => {
 
   const updateNotification = () => {
     const close = () => {
-      console.log("Notification was closed!");
+      dispatch(clearOfflineQueue());
     };
 
     const key = `open${Date.now()}`;
@@ -34,14 +38,12 @@ export const OfflineStatus = () => {
           history.push("/");
         }}
       >
-        Confirm
+        Save
       </Button>
     );
 
     return notification.open({
-      message: "Notification Title",
-      description:
-        'A function will be be called after the notification is closed (automatically after the "duration" time of manually).',
+      message: "Do you want to save your offline changes?",
       btn,
       key,
       onClose: close,
@@ -55,13 +57,6 @@ export const OfflineStatus = () => {
     }
   }, [isOffline]);
 
-  if (isOffline)
-    return (
-      <Alert
-        closable
-        message="You are offline! Please connect to the internet before editing!"
-        banner
-      />
-    );
+  if (isOffline) return <Alert closable message="You are offline!" banner />;
   else return <></>;
 };

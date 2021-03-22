@@ -437,9 +437,13 @@ export const sendRequests = () => async (dispatch) => {
   });
 
   //clear offlineQueue
+  dispatch(clearOfflineQueue());
+  dispatch(setIsLoading(false));
+};
+
+export const clearOfflineQueue = () => (dispatch) => {
   dispatch({
     type: ACTION.SET_OFFLINE_QUEUE,
     offlineQueue: [],
   });
-  dispatch(setIsLoading(false));
 };
