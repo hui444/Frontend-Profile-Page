@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import ClampLines from "react-clamp-lines";
 
-import { Button } from "antd";
 import { imageUri } from "../assets/fallBackPlaceholder";
 
 import "./WorkExperienceCard.css";

@@ -7,6 +7,7 @@
   padding: 10px;
   margin: 10px auto;
   width: 90vw;
+  max-width: 55rem;
   flex-direction: column;
 }
 
@@ -18,12 +19,13 @@
 }
 
 .WorkExperienceCard-flip-card__front-left img {
-  max-height: 16vw;
-  max-width: 16vw;
+  max-height: 10rem;
+  max-width: 10rem;
   width: auto;
   height: auto;
   display: block;
   margin: auto;
+  padding: 10px;
 }
 
 .WorkExperienceCard-flip-card__front-right {

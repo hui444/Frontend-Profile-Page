@@ -6,19 +6,19 @@ import _ from "lodash";
 import { EditOutlined } from "@ant-design/icons";
 import LoadingSpinner from "../shared/components/LoadingSpinner";
 import { imageUri } from "../assets/fallBackPlaceholder";
-import { getAllWorkExperiences, getProfileById } from "../store/profile/action";
 import { toDisplayDateFormat } from "../common/dateMethods";
+import WorkExperienceCard from "../components/WorkExperienceCard";
+import CreateProfileCard from "../components/CreateProfileCard";
 import {
   UserOutlined,
   IdcardOutlined,
   PhoneOutlined,
   MailOutlined,
 } from "@ant-design/icons";
+import { getAllWorkExperiences, getProfileById } from "../store/profile/action";
 
 import "./ProfilePage.css";
 import "antd/dist/antd.css";
-import WorkExperienceCard from "../components/WorkExperienceCard";
-import CreateProfileCard from "../components/CreateProfileCard";
 
 const ProfilePage = (props) => {
   const { userProfile, isLoading, profileId } = useSelector(
@@ -50,7 +50,6 @@ const ProfilePage = (props) => {
 
     return (
       <>
-        {/* {errors()} */}
         {isLoading && <LoadingSpinner asOverlay />}
         {props.children}
         {!isLoading && (
@@ -96,7 +95,7 @@ const ProfilePage = (props) => {
                   </span>
                 </h3>
               </div>
-              <div style={{ width: "90vw", margin: "auto" }}>
+              <div style={{ width: "86vw", margin: "auto" }}>
                 <div
                   style={{
                     display: "flex",
@@ -108,6 +107,7 @@ const ProfilePage = (props) => {
                     style={{
                       width: "30%",
                       padding: "10px",
+                      maxWidth: "12.5rem",
                     }}
                   >
                     <img
