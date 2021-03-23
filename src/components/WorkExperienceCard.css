@@ -1,4 +1,4 @@
-.WorkExperienceCard-flip-card__main-container {
+.WorkExperienceCard__main-container {
   background-color: #e6f2fc;
   color: black;
   border-radius: 5px;
@@ -11,14 +11,19 @@
   flex-direction: column;
 }
 
-.WorkExperienceCard-flip-card__front-left {
+.WorkExperienceCard__main-subcontainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.WorkExperienceCard__left-container {
   width: 20vw;
   margin: auto;
   display: flex;
   justify-content: center;
 }
 
-.WorkExperienceCard-flip-card__front-left img {
+.WorkExperienceCard__left-container img {
   max-height: clamp(6rem, 20vw, 10rem);
   max-width: clamp(6rem, 20vw, 10rem);
   width: auto;
@@ -28,7 +33,7 @@
   padding: 10px;
 }
 
-.WorkExperienceCard-flip-card__front-right {
+.WorkExperienceCard__right-container {
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -36,6 +41,10 @@
   text-align: left;
   flex: 70%;
   width: 70%;
+}
+
+.WorkExperienceCard__right-container em {
+  font-style: normal;
 }
 
 .clamp-lines__button {

@@ -1,31 +1,10 @@
-.EditIndivWorkExperienceModal-form {
+.EditWorkExperienceCard-form-topContainer {
   display: flex;
   flex-direction: column;
 }
 
-.EditIndivWorkExperienceModal-form-header-container {
-  background: azure;
-  margin: -15px -15px 10px -15px;
-  overflow: hidden;
-  border-radius: 5px 5px 0 0;
-  height: clamp(5rem, 16vw, 10rem);
-  display: flex;
-  justify-content: center;
-}
-
-.EditIndivWorkExperienceModal-form-header-container h1 {
-  margin: auto;
-  font-weight: 500;
-  font-size: clamp(20px, 5vw, 60px);
-}
-
-.EditIndivWorkExperienceModal-form-topContainer {
-  display: flex;
-  flex-direction: column;
-}
-
-.EditIndivWorkExperienceModal-form-topContainer input,
-.EditIndivWorkExperienceModal-form-section input,
+.EditWorkExperienceCard-form-topContainer input,
+.EditWorkExperienceCard-form-section input,
 textarea {
   padding: 5px;
   border-color: #510077;
@@ -34,61 +13,60 @@ textarea {
   margin: 0;
 }
 
-.EditIndivWorkExperienceModal-form-section p,
-.EditIndivWorkExperienceModal-dates-container p {
+.EditWorkExperienceCard-form-section p,
+.EditWorkExperienceCard-dates-container p {
   margin: 0;
   color: #dd1305;
   text-align: end;
 }
 
-.EditIndivWorkExperienceModal-form-section {
+.EditWorkExperienceCard-form-section {
   display: flex;
   flex-direction: column;
   margin-bottom: 5px;
 }
 
-.EditIndivWorkExperienceModal-dates-container h4,
-.EditIndivWorkExperienceModal-form-section h4 {
+.EditWorkExperienceCard-dates-container h4,
+.EditWorkExperienceCard-form-section h4 {
   margin-bottom: 5px;
 }
 
-.EditIndivWorkExperienceModal-dates-container text,
-.EditIndivWorkExperienceModal-form-section text {
-  margin-bottom: 5px;
-  color: red;
-}
-
-.EditIndivWorkExperienceModal-button-container {
+.EditWorkExperienceCard-button-container {
   margin: auto;
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
 
-.EditIndivWorkExperienceModal-button-container Button {
+.EditWorkExperienceCard-button-container Button {
   margin: 15px 15px 0 15px;
 }
 
-.EditIndivWorkExperienceModal-dates-container {
+.EditWorkExperienceCard-dates-container {
   display: flex;
   flex-direction: column;
 }
 
-.EditIndivWorkExperienceModal-dates-container input {
+.EditWorkExperienceCard-dates-container input {
   width: 45%;
   font-size: 12px;
 }
 
-.EditIndivWorkExperienceModal-currentJob-container {
+.EditWorkExperienceCard-currentJob-container {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   margin: 10px;
 }
 
-.EditIndivWorkExperienceModal-dates-container-inputs {
+.EditWorkExperienceCard-dates-container-inputs {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: baseline;
+}
+
+.EditWorkExperienceCard-dates-container-inputs em,
+.EditWorkExperienceCard-currentJob-container em {
+  font-style: normal;
 }

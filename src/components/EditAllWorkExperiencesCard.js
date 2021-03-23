@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
-import { toDisplayDateFormat } from "../common/dateMethods";
-import { EditOutlined, DeleteFilled, PlusOutlined } from "@ant-design/icons";
 import { List, Avatar, Skeleton, Button, Popconfirm } from "antd";
-import Modal from "../shared/components/Modal";
+import { EditOutlined, DeleteFilled, PlusOutlined } from "@ant-design/icons";
+import Card from "../shared/components/Card";
 
+import { toDisplayDateFormat } from "../common/dateMethods";
 import {
   deleteWorkExperience,
   getAllWorkExperiences,
@@ -42,26 +42,14 @@ const EditAllWorkExperiencesCard = () => {
   }, [dispatch]);
 
   return (
-    <Modal>
-      <div className="EditExperienceModal-form-header-container">
-        <h1>Edit Work Experiences</h1>
-      </div>
+    <Card title="Edit Work Experiences">
       {list?.length !== 0 && (
         <List
           className="demo-loadmore-list"
           itemLayout="horizontal"
           dataSource={list}
           renderItem={(item) => (
-            <div
-              style={{
-                margin: "10px",
-                display: "flex",
-                flexDirection: "column",
-                backgroundColor: "#fcfcfc",
-                borderRadius: "5px",
-                filter: "drop-shadow(1px 2.5px 3px rgb(189, 189, 189))",
-              }}
-            >
+            <div className="EditAllWorkExperiencesCard-indivWE-card-container">
               <List.Item
                 actions={[
                   // eslint-disable-next-line jsx-a11y/anchor-is-valid
@@ -98,11 +86,10 @@ const EditAllWorkExperiencesCard = () => {
                   <List.Item.Meta
                     avatar={<Avatar src={item.companyLogo} />}
                     title={
-                      // TODO: replace with workExperience page link
-                      <a href="https://ant.design">
+                      <>
                         <b>{item.jobTitle}</b>
                         {`, ${item.companyName}`}
-                      </a>
+                      </>
                     }
                     description={`${toDisplayDateFormat(item.startDate)} - ${
                       toDisplayDateFormat(item.endDate) ?? "Current"
@@ -122,10 +109,10 @@ const EditAllWorkExperiencesCard = () => {
       >
         Add Work Experience
       </Button>
-      <div className="EditExperienceModal-button-container">
+      <div className="EditAllWorkExperiencesCard-button-container">
         <Button onClick={onSave}>Save</Button>
       </div>
-    </Modal>
+    </Card>
   );
 };
 

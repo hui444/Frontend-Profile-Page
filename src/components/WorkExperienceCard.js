@@ -9,15 +9,15 @@ import "antd/dist/antd.css";
 const WorkExperienceCard = (props) => {
   return (
     <>
-      <div className="WorkExperienceCard-flip-card__main-container">
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <div className="WorkExperienceCard-flip-card__front-left">
+      <div className="WorkExperienceCard__main-container">
+        <div className="WorkExperienceCard__main-subcontainer">
+          <div className="WorkExperienceCard__left-container">
             <img src={props.companyImage ?? imageUri} alt="company" />
           </div>
-          <div className="WorkExperienceCard-flip-card__front-right">
+          <div className="WorkExperienceCard__right-container">
             <b>{props.position}</b>
-            <text>{props.company}</text>
-            <text>{props.date}</text>
+            <em>{props.company}</em>
+            <em>{props.date}</em>
             <ClampLines
               text={props.description}
               id="custom"

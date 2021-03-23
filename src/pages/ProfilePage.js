@@ -3,18 +3,19 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import _ from "lodash";
 
-import { EditOutlined } from "@ant-design/icons";
-import LoadingSpinner from "../shared/components/LoadingSpinner";
-import { imageUri } from "../assets/fallBackPlaceholder";
-import { toDisplayDateFormat } from "../common/dateMethods";
-import WorkExperienceCard from "../components/WorkExperienceCard";
-import CreateProfileCard from "../components/CreateProfileCard";
 import {
+  EditOutlined,
   UserOutlined,
   IdcardOutlined,
   PhoneOutlined,
   MailOutlined,
 } from "@ant-design/icons";
+import LoadingSpinner from "../shared/components/LoadingSpinner";
+import WorkExperienceCard from "../components/WorkExperienceCard";
+import CreateProfileCard from "../components/CreateProfileCard";
+import { imageUri } from "../assets/fallBackPlaceholder";
+
+import { toDisplayDateFormat } from "../common/dateMethods";
 import { getAllWorkExperiences, getProfileById } from "../store/profile/action";
 
 import "./ProfilePage.css";
@@ -71,7 +72,7 @@ const ProfilePage = (props) => {
                   <span style={{ fontSize: "60px" }}>{userProfile?.name}</span>
                   {currentJob.length === 1 && (
                     <span style={{ fontSize: "30px" }}>
-                      A {currentJob[0].jobTitle} at {currentJob[0].companyName}
+                      {currentJob[0].jobTitle} at {currentJob[0].companyName}
                     </span>
                   )}
                 </div>
@@ -187,6 +188,7 @@ const ProfilePage = (props) => {
                     style={{
                       display: "flex",
                       flexDirection: "column",
+                      paddingBottom: "2rem",
                     }}
                   >
                     {userProfile?.workExperiences.map((workExperience) => {

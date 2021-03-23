@@ -1,12 +1,14 @@
 import React, { useRef, useState, useEffect } from "react";
 
+import useSnackbar from "../hooks/useSnackbar";
+
 import { Button } from "antd";
+import { CloseCircleFilled } from "@ant-design/icons";
+
+import { ImageToUri } from "../../common/imageToUri";
 
 import "./ImageUpload.css";
 import "antd/dist/antd.css";
-import { CloseCircleFilled } from "@ant-design/icons";
-import { ImageToUri } from "../../common/imageToUri";
-import useSnackbar from "../hooks/useSnackbar";
 
 const ImageUpload = (props) => {
   const [file, setFile] = useState();
@@ -19,6 +21,7 @@ const ImageUpload = (props) => {
     if (!file) {
       props.onInput(props.defaultValue);
       props.isValid(true);
+      setIsValid(true);
       return;
     }
     const fileReader = new FileReader();
@@ -57,7 +60,6 @@ const ImageUpload = (props) => {
       <input
         id={props.id}
         ref={filePickerRef}
-        style={{ display: "none" }}
         type="file"
         accept=".jpg,.png,.jpeg"
         onChange={pickedHandler}
@@ -66,21 +68,14 @@ const ImageUpload = (props) => {
         <div
           className="image-upload__preview"
           style={{
-            border: previewUrl
-              ? isValid
-                ? ""
-                : "1px dashed #ccc"
-              : "1px dashed #ccc",
+            border:
+              (previewUrl && !isValid) || !previewUrl ? "1px dashed #ccc" : "",
             background: file && !isValid ? "#ffd1d1" : "",
           }}
         >
-          {!previewUrl && (
-            <em style={{ fontStyle: "normal", color: "cornflowerblue" }}>
-              Image Preview
-            </em>
-          )}
+          {!previewUrl && <em>Image Preview</em>}
           {previewUrl && (
-            <div style={{ position: "relative" }}>
+            <div className="image-upload__preview-container">
               <img src={previewUrl} alt="Preview" />
               <CloseCircleFilled
                 className="image-upload__preview-CloseCircleFilled"

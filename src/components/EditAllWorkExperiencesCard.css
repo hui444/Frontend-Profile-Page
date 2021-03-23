@@ -1,25 +1,4 @@
-.EditExperienceModal-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.EditExperienceModal-form-header-container {
-  background: azure;
-  margin: -15px -15px 10px -15px;
-  overflow: hidden;
-  border-radius: 5px 5px 0 0;
-  height: clamp(5rem, 16vw, 10rem);
-  display: flex;
-  justify-content: center;
-}
-
-.EditExperienceModal-form-header-container h1 {
-  margin: auto;
-  font-weight: 500;
-  font-size: clamp(20px, 5vw, 60px);
-}
-
-.EditExperienceModal-form input,
+.EditAllWorkExperiencesCard-form input,
 textarea {
   padding: 5px;
   margin-bottom: 5px;
@@ -28,18 +7,18 @@ textarea {
   outline-style: none;
 }
 
-.EditExperienceModal-button-container {
+.EditAllWorkExperiencesCard-button-container {
   margin: auto;
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
 
-.EditExperienceModal-button-container Button {
+.EditAllWorkExperiencesCard-button-container Button {
   margin: 15px 15px 0 15px;
 }
 
-.EditExperienceModal-form Space {
+.EditAllWorkExperiencesCard-form Space {
   margin: 5px 0;
 }
 
@@ -48,13 +27,22 @@ textarea {
 }
 
 .ant-list-item-action > li {
-  font-size: clamp(12px, 3vw, 24px);
+  font-size: clamp(12px, 3vw, 16px);
 }
 
-.ant-list-item-meta-title > a {
-  font-size: clamp(15px, 2vw, 24px);
+.ant-list-item-meta-title {
+  font-size: 16px;
 }
 
 .ant-list-item-meta-description {
-  font-size: clamp(14px, 1.6vw, 21px);
+  font-size: 14px;
+}
+
+.EditAllWorkExperiencesCard-indivWE-card-container {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fcfcfc;
+  border-radius: 5px;
+  filter: drop-shadow(1px 2.5px 3px rgb(189, 189, 189));
 }

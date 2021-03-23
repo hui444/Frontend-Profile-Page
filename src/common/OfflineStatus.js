@@ -5,6 +5,7 @@ import { Alert, Button, notification } from "antd";
 import {
   clearOfflineQueue,
   sendRequests,
+  setIsLoading,
   setIsOffline,
 } from "../store/profile/action";
 import { useHistory } from "react-router";
@@ -34,6 +35,7 @@ export const OfflineStatus = () => {
         size="small"
         onClick={() => {
           notification.close(key);
+          dispatch(setIsLoading(true));
           dispatch(sendRequests());
           history.push("/");
         }}
@@ -57,6 +59,13 @@ export const OfflineStatus = () => {
     }
   }, [isOffline]);
 
-  if (isOffline) return <Alert closable message="You are offline!" banner />;
+  if (isOffline)
+    return (
+      <Alert
+        closable
+        message="You are offline! Changes made will be updated when you are back online."
+        banner
+      />
+    );
   else return <></>;
 };

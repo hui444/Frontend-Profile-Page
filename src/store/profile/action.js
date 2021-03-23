@@ -411,28 +411,32 @@ export const sendRequests = () => async (dispatch) => {
   const offlineQueue = loadState().profile.offlineQueue;
 
   offlineQueue?.map(async (req) => {
-    if (req.method === "DELETE") {
-      await fetch(req.endpoint, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-    } else if (req.method === ("PATCH" || "POST")) {
-      await fetch(req.endpoint, {
-        method: req.method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: req.body,
-      });
-      //update stores
-      const storedData = loadState();
-      dispatch(getProfileById(storedData.profile.profileId));
-      dispatch(getAllWorkExperiences(storedData.profile.profileId));
-    } else {
-      console.log(req); //ignore request
-      return;
+    try {
+      if (req.method === "DELETE") {
+        await fetch(req.endpoint, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      } else if (req.method === "PATCH" || req.method === "POST") {
+        await fetch(req.endpoint, {
+          method: req.method,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: req.body,
+        });
+        //update stores
+        const storedData = loadState();
+        dispatch(getProfileById(storedData.profile.profileId));
+        dispatch(getAllWorkExperiences(storedData.profile.profileId));
+      } else {
+        console.log(req); //ignore request
+        return;
+      }
+    } catch (err) {
+      console.log(err); //ignore error
     }
   });
 

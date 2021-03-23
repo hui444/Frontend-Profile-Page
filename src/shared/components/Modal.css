@@ -15,7 +15,7 @@
   padding: 15px;
   border: 1px solid #888;
   border-radius: 5px;
-  width: 80vw;
+  width: clamp(20rem, 80vw, 40rem);
   justify-content: center;
   height: fit-content;
 }
