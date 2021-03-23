@@ -58,7 +58,7 @@ const EditAllWorkExperiencesCard = () => {
                     onClick={() => {
                       dispatch(setSelectedWorkExperience(item));
                       history.push(
-                        `/${profileId}/edit/workExperience/${item.workExperienceId}`
+                        `/${profileId}/edit/workExperience/${item.weId}`
                       );
                     }}
                   >

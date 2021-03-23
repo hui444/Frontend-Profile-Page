@@ -1,4 +1,18 @@
-.profilePage-topContainer {
+.ProfilePage-top__main-container {
+  position: relative;
+}
+
+.ProfilePage-top__edit-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: clamp(18px, 2.5vw, 1.5rem);
+  z-index: 5;
+  color: white;
+  margin: clamp(10px, 2vw, 20px);
+}
+
+.ProfilePage-topContainer {
   position: relative;
   height: 250px;
   width: 100vw;
@@ -7,7 +21,7 @@
   justify-content: center;
 }
 
-.profilePage-topContainer::before {
+.ProfilePage-topContainer::before {
   content: "";
   position: absolute;
   top: 0;
@@ -19,9 +33,110 @@
   filter: opacity(0.7);
 }
 
-.profilePage-topContainer-inside {
+.ProfilePage-topContainer-inside {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.ProfilePage-span__small-text {
+  font-size: 30px;
+}
+
+.ProfilePage-span__name-text {
+  font-size: 60px;
+}
+
+.ProfilePage-aboutMe__text-container {
+  margin: 0 7vw;
+}
+
+.ProfilePage-aboutMe__text-container h3 {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #000;
+  line-height: 0.1em;
+  margin: 20px 0 30px;
+}
+
+.ProfilePage-aboutMe__text-container span {
+  padding: 0 10px;
+  background: #fff;
+}
+
+.ProfilePage-aboutMe__container {
+  width: 86vw;
+  margin: auto;
+}
+
+.ProfilePage-userInformation__container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+}
+
+.ProfilePage-userInformation__left-container {
+  width: 30%;
+  padding: 10px;
+  max-width: 12.5rem;
+}
+
+.ProfilePage-userInformation__left-container img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  display: block;
+}
+
+.ProfilePage-userInformation__right-container {
+  width: 70%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  max-height: 11rem;
+}
+
+.ProfilePage-description__container {
+  text-align: justify;
+  white-space: pre-line;
+}
+
+.ProfilePage-workExperiences__text-container {
+  margin: 0 0 0 5vw;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 95vw;
+}
+
+.ProfilePage-workExperiences__text-container h3 {
+  width: 90vw;
+  text-align: center;
+  border-bottom: 1px solid #000;
+  line-height: 0.1em;
+  margin: 20px 0;
+}
+
+.ProfilePage-workExperiences__text-container span {
+  padding: 0 10px;
+  background: #fff;
+}
+
+.ProfilePage-workExperiences__edit-icon {
+  font-size: clamp(18px, 2.5vw, 1.5rem);
+  color: black;
+  margin: 10px;
+}
+
+.ProfilePage-workExperiences__cards-container {
+  position: relative;
+}
+
+.ProfilePage-workExperiences__cards-subcontainer {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 2rem;
 }

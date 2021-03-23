@@ -11,7 +11,7 @@ const Modal = (props) => {
         position: props.position ? `${props.position}` : "fixed",
       }}
     >
-      <div style={{ margin: "auto", height: "fit-content" }}>
+      <div className="Modal-subContainer">
         <div className="Modal-modal-content">{props.children}</div>
       </div>
     </div>

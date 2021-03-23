@@ -9,6 +9,11 @@
   background-color: rgba(0, 0, 0, 0.4);
 }
 
+.Modal-subContainer {
+  margin: auto;
+  height: fit-content;
+}
+
 .Modal-modal-content {
   background-color: #fefefe;
   margin: 1rem;

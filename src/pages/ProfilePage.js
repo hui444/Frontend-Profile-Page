@@ -37,10 +37,10 @@ const ProfilePage = (props) => {
   if (_.isEmpty(userProfile) || userProfile === undefined) {
     console.log(userProfile);
     return (
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <>
         {userProfile === null && isLoading && <LoadingSpinner asOverlay />}
         {!isLoading && <CreateProfileCard />}
-      </div>
+      </>
     );
   } else {
     const currentJob = userProfile?.workExperiences.filter((we) => {
@@ -53,25 +53,21 @@ const ProfilePage = (props) => {
         {props.children}
         {!isLoading && (
           <>
-            <div style={{ position: "relative" }}>
+            <div className="ProfilePage-top__main-container">
               <EditOutlined
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  right: 0,
-                  fontSize: "clamp(18px, 2.5vw, 1.5rem)",
-                  zIndex: 5,
-                  color: "white",
-                  margin: "clamp(10px, 2vw, 20px)",
-                }}
+                className="ProfilePage-top__edit-icon"
                 onClick={() => history.push(`/${profileId}/edit/intro`)}
               />
-              <div className="profilePage-topContainer">
-                <div className="profilePage-topContainer-inside">
-                  <span style={{ fontSize: "30px" }}>Hello! I am</span>
-                  <span style={{ fontSize: "60px" }}>{userProfile?.name}</span>
+              <div className="ProfilePage-topContainer">
+                <div className="ProfilePage-topContainer-inside">
+                  <span className="ProfilePage-span__small-text">
+                    Hello! I am
+                  </span>
+                  <span className="ProfilePage-span__name-text">
+                    {userProfile?.name}
+                  </span>
                   {currentJob.length === 1 && (
-                    <span style={{ fontSize: "30px" }}>
+                    <span className="ProfilePage-span__small-text">
                       {currentJob[0].jobTitle} at {currentJob[0].companyName}
                     </span>
                   )}
@@ -79,57 +75,20 @@ const ProfilePage = (props) => {
               </div>
             </div>
             <div>
-              <div style={{ margin: "0 7vw" }}>
-                <h3
-                  style={{
-                    width: "100%",
-                    textAlign: "center",
-                    borderBottom: "1px solid #000",
-                    lineHeight: "0.1em",
-                    margin: "20px 0 30px",
-                  }}
-                >
-                  <span style={{ padding: "0 10px", background: "#fff" }}>
-                    ABOUT ME
-                  </span>
+              <div className="ProfilePage-aboutMe__text-container">
+                <h3>
+                  <span>ABOUT ME</span>
                 </h3>
               </div>
-              <div style={{ width: "86vw", margin: "auto" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    marginBottom: "1rem",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "30%",
-                      padding: "10px",
-                      maxWidth: "12.5rem",
-                    }}
-                  >
+              <div className="ProfilePage-aboutMe__container">
+                <div className="ProfilePage-userInformation__container">
+                  <div className="ProfilePage-userInformation__left-container">
                     <img
-                      style={{
-                        maxWidth: "100%",
-                        maxHeight: "100%",
-                        width: "auto",
-                        height: "auto",
-                        display: "block",
-                      }}
                       src={userProfile?.profileImage ?? imageUri}
                       alt="Profile"
                     />
                   </div>
-                  <div
-                    style={{
-                      width: "70%",
-                      padding: "10px",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-evenly",
-                    }}
-                  >
+                  <div className="ProfilePage-userInformation__right-container">
                     <div>
                       <UserOutlined /> Name: {userProfile?.name}
                     </div>
@@ -145,52 +104,24 @@ const ProfilePage = (props) => {
                     </div>
                   </div>
                 </div>
-                <div style={{ textAlign: "justify", whiteSpace: "pre-line" }}>
+                <div className="ProfilePage-description__container">
                   {userProfile?.description}
                 </div>
               </div>
-              <div>
-                <div
-                  style={{
-                    margin: "0 0 0 5vw",
-                    position: "relative",
-                    display: "flex",
-                    flexDirection: "row",
-                    width: "95vw",
-                  }}
-                >
-                  <h3
-                    style={{
-                      width: "90vw",
-                      textAlign: "center",
-                      borderBottom: "1px solid #000",
-                      lineHeight: "0.1em",
-                      margin: "20px 0",
-                    }}
-                  >
-                    <span style={{ padding: "0 10px", background: "#fff" }}>
-                      WORK EXPERIENCES
-                    </span>
+              <>
+                <div className="ProfilePage-workExperiences__text-container">
+                  <h3>
+                    <span>WORK EXPERIENCES</span>
                   </h3>
                   <EditOutlined
-                    style={{
-                      fontSize: "clamp(18px, 2.5vw, 1.5rem)",
-                      color: "black",
-                      margin: "10px",
-                    }}
+                    className="ProfilePage-workExperiences__edit-icon"
                     onClick={() =>
                       history.push(`/${profileId}/edit/workExperiences`)
                     }
                   />
                 </div>
-                <div style={{ position: "relative" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      paddingBottom: "2rem",
-                    }}
-                  >
+                <div className="ProfilePage-workExperiences__cards-container">
+                  <div className="ProfilePage-workExperiences__cards-subcontainer">
                     {userProfile?.workExperiences.map((workExperience) => {
                       return (
                         <WorkExperienceCard
@@ -209,7 +140,7 @@ const ProfilePage = (props) => {
                     })}
                   </div>
                 </div>
-              </div>
+              </>
             </div>
           </>
         )}
