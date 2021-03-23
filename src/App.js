@@ -1,30 +1,26 @@
 import React, { Suspense } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
-import { OfflineStatus } from "./common/OfflineStatus";
-import CreateWorkExperienceCard from "./components/CreateWorkExperienceCard";
-import EditAllWorkExperiencesCard from "./components/EditAllWorkExperiencesCard";
-import EditProfileCard from "./components/EditProfileCard";
-import EditWorkExperienceCard from "./components/EditWorkExperienceCard";
 
 import LoadingSpinner from "./shared/components/LoadingSpinner";
-import ErrorPage from "./shared/pages/ErrorPage";
 
+import { OfflineStatus } from "./common/OfflineStatus";
 import Store from "./store/Store";
 
 const ProfilePage = React.lazy(() => import("./pages/ProfilePage"));
-// const EditProfileModal = React.lazy(() =>
-//   import("./components/EditProfileModal")
-// );
-// const EditExperienceModal = React.lazy(() =>
-//   import("./components/EditExperienceModal")
-// );
-// const CreateWorkExperience = React.lazy(() =>
-//   import("./components/CreateWorkExperience")
-// );
-// const EditIndivWorkExperienceModal = React.lazy(() =>
-//   import("./components/EditIndivWorkExperienceModal")
-// );
+const CreateWorkExperienceCard = React.lazy(() =>
+  import("./components/CreateWorkExperienceCard")
+);
+const EditAllWorkExperiencesCard = React.lazy(() =>
+  import("./components/EditAllWorkExperiencesCard")
+);
+const EditProfileCard = React.lazy(() =>
+  import("./components/EditProfileCard")
+);
+const EditWorkExperienceCard = React.lazy(() =>
+  import("./components/EditWorkExperienceCard")
+);
+const ErrorPage = React.lazy(() => import("./shared/pages/ErrorPage"));
 
 const App = () => {
   const routes = (
