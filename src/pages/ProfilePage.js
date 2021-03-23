@@ -35,7 +35,6 @@ const ProfilePage = (props) => {
   }, [dispatch]);
 
   if (_.isEmpty(userProfile) || userProfile === undefined) {
-    console.log(userProfile);
     return (
       <>
         {userProfile === null && isLoading && <LoadingSpinner asOverlay />}
@@ -122,22 +121,25 @@ const ProfilePage = (props) => {
                 </div>
                 <div className="ProfilePage-workExperiences__cards-container">
                   <div className="ProfilePage-workExperiences__cards-subcontainer">
-                    {userProfile?.workExperiences.map((workExperience) => {
-                      return (
-                        <WorkExperienceCard
-                          companyImage={workExperience.companyLogo}
-                          position={workExperience.jobTitle}
-                          company={workExperience.companyName}
-                          date={
-                            toDisplayDateFormat(workExperience.startDate) +
-                            " - " +
-                            (toDisplayDateFormat(workExperience.endDate) ??
-                              "Current")
-                          }
-                          description={workExperience.jobDescription}
-                        />
-                      );
-                    })}
+                    {userProfile?.workExperiences.map(
+                      (workExperience, index) => {
+                        return (
+                          <WorkExperienceCard
+                            key={index}
+                            companyImage={workExperience.companyLogo}
+                            position={workExperience.jobTitle}
+                            company={workExperience.companyName}
+                            date={
+                              toDisplayDateFormat(workExperience.startDate) +
+                              " - " +
+                              (toDisplayDateFormat(workExperience.endDate) ??
+                                "Current")
+                            }
+                            description={workExperience.jobDescription}
+                          />
+                        );
+                      }
+                    )}
                   </div>
                 </div>
               </>

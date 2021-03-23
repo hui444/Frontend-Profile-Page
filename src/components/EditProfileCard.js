@@ -62,7 +62,6 @@ const EditProfileCard = () => {
         }),
       };
 
-      console.log(updatedProfile);
       if (!_.isEmpty(updatedProfile))
         dispatch(editProfileById(profileId, updatedProfile));
       history.push("/");
