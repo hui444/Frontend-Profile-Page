@@ -135,7 +135,6 @@ const EditProfileCard = () => {
           name="contactNumber"
           ref={register({
             min: 0,
-            validate: (input) => input.trim().length !== 0,
           })}
           style={{
             borderColor: errors.contactNumber && "red",
@@ -145,10 +144,7 @@ const EditProfileCard = () => {
             userProfile?.contactNumber && `${userProfile?.contactNumber}`
           }
         />
-        {(errors.contactNumber ||
-          errors.contactNumber?.type === "validate") && (
-          <p>Invalid Contact Number!</p>
-        )}
+        {errors.contactNumber && <p>Invalid Contact Number!</p>}
       </div>
 
       <div className="EditProfileCard-form-section">
