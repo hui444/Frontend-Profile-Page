@@ -21,7 +21,7 @@ const WorkExperienceCard = (props) => {
             <ClampLines
               text={props.description}
               id="custom"
-              lines={4}
+              lines={3}
               ellipsis="..."
               moreText="Show more"
               lessText="Show less"
