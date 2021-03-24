@@ -65,6 +65,7 @@ export const OfflineStatus = () => {
         closable
         message="You are offline! Changes made will be updated when you are back online."
         banner
+        style={{ zIndex: 100, position: "sticky", top: 0, left: 0 }}
       />
     );
   else return <></>;

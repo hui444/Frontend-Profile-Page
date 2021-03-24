@@ -15,6 +15,7 @@ import {
   editWorkExperienceById,
   getWorkExperienceById,
   resetSelectedWorkExperience,
+  setSelectedWorkExperience,
 } from "../store/profile/action";
 
 import "./EditWorkExperienceCard.css";
@@ -22,9 +23,12 @@ import "antd/dist/antd.css";
 
 const EditWorkExperienceCard = () => {
   const { handleSubmit, register, errors, watch } = useForm();
-  const { selectedWorkExperience, isLoading } = useSelector(
-    (state) => state.profile
-  );
+  const {
+    selectedWorkExperience,
+    isLoading,
+    isOffline,
+    workExperience,
+  } = useSelector((state) => state.profile);
   const [isCurrentJob, setIsCurrentJob] = useState(
     selectedWorkExperience?.isCurrentJob ?? true
   );
@@ -37,7 +41,10 @@ const EditWorkExperienceCard = () => {
   const workExperienceId = useParams().workExperienceId;
 
   useEffect(() => {
-    dispatch(getWorkExperienceById(profileId, workExperienceId));
+    if (selectedWorkExperience.weId !== workExperienceId && !isOffline) {
+      dispatch(getWorkExperienceById(profileId, workExperienceId));
+      dispatch(setSelectedWorkExperience(workExperience));
+    }
   }, [dispatch, profileId, workExperienceId]);
 
   const onSave = (values) => {

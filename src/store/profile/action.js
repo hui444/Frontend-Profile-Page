@@ -4,7 +4,7 @@ import { ACTION } from "./reducer";
 import uuid from "react-uuid";
 import { loadState } from "../localStorage";
 
-const setProfileId = (profileId) => (dispatch) => {
+export const setProfileId = (profileId) => (dispatch) => {
   dispatch({
     type: ACTION.SET_PROFILE_ID,
     profileId: profileId,
@@ -22,6 +22,7 @@ export const getProfileById = (profileId) => async (dispatch, getState) => {
       userProfile: storedData.profile.userProfile,
     });
   } else {
+    console.log(profileId);
     if (profileId === undefined) {
       await fetch(ENDPOINTS.URL)
         .then((resp) => {
@@ -34,6 +35,7 @@ export const getProfileById = (profileId) => async (dispatch, getState) => {
             type: ACTION.GET_PROFILE_BY_PID,
             userProfile: resp.profile,
           });
+          console.log(resp.profile.id);
           dispatch(setProfileId(resp.profile.id));
         })
         .catch((err) => {
@@ -105,12 +107,15 @@ export const getAllWorkExperiences = (profileId) => async (
   const { isOffline } = getState().profile;
 
   if (isOffline) {
-    const storedData = loadState();
-    dispatch({
-      type: ACTION.GET_ALL_WORK_EXPERIENCE_BY_PID,
-      allWorkExperiences: storedData.profile.userProfile.workExperiences,
-    });
+    // const storedData = loadState();
+    // console.log(storedData.profile.userProfile.workExperiences);
+    // dispatch({
+    //   type: ACTION.GET_ALL_WORK_EXPERIENCE_BY_PID,
+    //   allWorkExperiences: storedData.profile.userProfile.workExperiences,
+    // });
   } else {
+    console.log(profileId);
+
     if (profileId === undefined) {
       // /workExperiences
       await fetch(`${ENDPOINTS.URL}/workExperiences`)
@@ -120,11 +125,11 @@ export const getAllWorkExperiences = (profileId) => async (
           } else return resp.json();
         })
         .then((resp) => {
+          console.log(resp);
           dispatch({
             type: ACTION.GET_ALL_WORK_EXPERIENCE_BY_PID,
             allWorkExperiences: resp.workExperiences,
           });
-          dispatch(setProfileId(resp.profile.id));
         })
         .catch((err) => {
           console.log(err);
@@ -173,6 +178,58 @@ export const editWorkExperienceById = (
       method: "PATCH",
       body: JSON.stringify(workExperience),
     };
+    const oldProfile = loadState().profile.userProfile;
+    const selectedWorkExperienceIndex = oldProfile.workExperiences.findIndex(
+      (x) => x.weId === weId
+    );
+    console.log(selectedWorkExperienceIndex);
+    console.log(oldProfile.workExperiences);
+    let updateOfflineProfile = oldProfile;
+    if (selectedWorkExperienceIndex !== -1) {
+      const selectedWE =
+        oldProfile.workExperiences[selectedWorkExperienceIndex];
+      console.log("work experience id: " + selectedWorkExperienceIndex);
+      oldProfile.workExperiences[selectedWorkExperienceIndex] = {
+        companyLogo: workExperience.companyLogo
+          ? workExperience.companyLogo
+          : workExperience.companyLogo === null
+          ? null
+          : selectedWE.companyLogo,
+        companyName: workExperience.companyName
+          ? workExperience.companyName
+          : selectedWE.companyName,
+        endDate: workExperience.endDate
+          ? workExperience.endDate
+          : workExperience.endDate === undefined
+          ? undefined
+          : selectedWE.endDate,
+        isCurrentJob: workExperience.isCurrentJob
+          ? workExperience.isCurrentJob
+          : selectedWE.isCurrentJob,
+        jobDescription: workExperience.jobDescription
+          ? workExperience.jobDescription
+          : selectedWE.jobDescription,
+        jobTitle: workExperience.jobTitle
+          ? workExperience.jobTitle
+          : selectedWE.jobTitle,
+        startDate: workExperience.startDate
+          ? workExperience.startDate
+          : selectedWE.startDate,
+        weId: selectedWE.weId,
+      };
+      updateOfflineProfile = oldProfile;
+      console.log(oldProfile.workExperiences);
+      //update userProfile, allWorkExperiences states
+      dispatch({
+        type: ACTION.GET_PROFILE_BY_PID,
+        userProfile: updateOfflineProfile,
+      });
+      dispatch({
+        type: ACTION.GET_ALL_WORK_EXPERIENCE_BY_PID,
+        allWorkExperiences: updateOfflineProfile.workExperiences,
+      });
+    }
+
     dispatch(setOfflineQueue(req));
   } else {
     ///:profileId/workExperience/:workExperienceId
@@ -215,6 +272,32 @@ export const editProfileById = (profileId, newProfile) => async (
       method: "PATCH",
       body: JSON.stringify(newProfile),
     };
+    const oldProfile = loadState().profile.userProfile;
+    const updateOfflineProfile = {
+      ...oldProfile,
+      ...(newProfile.age && { age: newProfile.age }),
+      ...((newProfile.contactNumber || newProfile.contactNumber === null) && {
+        contactNumber: newProfile.contactNumber
+          ? newProfile.contactNumber
+          : undefined,
+      }),
+      ...(newProfile.description && {
+        description: newProfile.description,
+      }),
+      ...((newProfile.email || newProfile.email === null) && {
+        email: newProfile.email ? newProfile.email : undefined,
+      }),
+      ...(newProfile.name && { name: newProfile.name }),
+      ...((newProfile.profileImage || newProfile.profileImage === null) && {
+        profileImage: newProfile.profileImage
+          ? newProfile.profileImage
+          : undefined,
+      }),
+    };
+    dispatch({
+      type: ACTION.GET_PROFILE_BY_PID,
+      userProfile: updateOfflineProfile,
+    });
     dispatch(setOfflineQueue(req));
   } else {
     ///:profileId
@@ -253,6 +336,10 @@ export const createProfile = (profile) => async (dispatch, getState) => {
       method: "POST",
       body: JSON.stringify(profile),
     };
+    dispatch({
+      type: ACTION.GET_PROFILE_BY_PID,
+      userProfile: profile,
+    });
     dispatch(setOfflineQueue(req));
   } else {
     ///create
@@ -302,6 +389,22 @@ export const createWorkExperience = (profileId, workExperience) => async (
       method: "POST",
       body: JSON.stringify(newWorkExperience),
     };
+    const oldProfile = loadState().profile.userProfile;
+    const updatedWorkExperiences = oldProfile.workExperiences.concat(
+      newWorkExperience
+    );
+    const updateOfflineProfile = {
+      ...oldProfile,
+      workExperiences: updatedWorkExperiences,
+    };
+    dispatch({
+      type: ACTION.GET_PROFILE_BY_PID,
+      userProfile: updateOfflineProfile,
+    });
+    dispatch({
+      type: ACTION.GET_ALL_WORK_EXPERIENCE_BY_PID,
+      allWorkExperiences: updatedWorkExperiences,
+    });
     dispatch(setOfflineQueue(req));
   } else {
     ///:profileId/create
@@ -344,6 +447,22 @@ export const deleteWorkExperience = (profileId, weId) => async (
       method: "DELETE",
       body: null,
     };
+    const oldProfile = loadState().profile.userProfile;
+    const updatedWorkExperiences = oldProfile.workExperiences.filter((we) => {
+      return we.weId !== weId;
+    });
+    const updateOfflineProfile = {
+      ...oldProfile,
+      workExperiences: updatedWorkExperiences,
+    };
+    dispatch({
+      type: ACTION.GET_PROFILE_BY_PID,
+      userProfile: updateOfflineProfile,
+    });
+    dispatch({
+      type: ACTION.GET_ALL_WORK_EXPERIENCE_BY_PID,
+      allWorkExperiences: updatedWorkExperiences,
+    });
     dispatch(setOfflineQueue(req));
   } else {
     ///:profileId/workExperience/:workExperienceId
@@ -409,8 +528,11 @@ export const setOfflineQueue = (request) => (dispatch, getState) => {
 export const sendRequests = () => async (dispatch) => {
   dispatch(setIsLoading(true));
   const offlineQueue = loadState().profile.offlineQueue;
+  let errors = 0;
+  const [error] = useSnackbar("error");
+  const [success] = useSnackbar("success");
 
-  offlineQueue?.map(async (req) => {
+  await offlineQueue?.forEach(async (req, index) => {
     try {
       if (req.method === "DELETE") {
         await fetch(req.endpoint, {
@@ -418,7 +540,15 @@ export const sendRequests = () => async (dispatch) => {
           headers: {
             "Content-Type": "application/json",
           },
-        });
+        })
+          .then((resp) => {
+            if (resp.status >= 400) return resp;
+            else return;
+          })
+          .catch((err) => {
+            console.log(err); //ignore error
+            errors++;
+          });
       } else if (req.method === "PATCH" || req.method === "POST") {
         await fetch(req.endpoint, {
           method: req.method,
@@ -426,23 +556,41 @@ export const sendRequests = () => async (dispatch) => {
             "Content-Type": "application/json",
           },
           body: req.body,
-        });
-        //update stores
-        const storedData = loadState();
-        dispatch(getProfileById(storedData.profile.profileId));
-        dispatch(getAllWorkExperiences(storedData.profile.profileId));
+        })
+          .then((resp) => {
+            if (resp.status >= 400) return resp;
+            else return;
+          })
+          .catch((err) => {
+            console.log(err); //ignore error
+            errors++;
+          });
       } else {
         console.log(req); //ignore request
+        errors++;
         return;
       }
     } catch (err) {
       console.log(err); //ignore error
+      errors++;
+    }
+    if (index === offlineQueue.length - 1) {
+      console.log(index);
+      console.log(offlineQueue.length);
+      //update stores
+      const storedData = loadState();
+      dispatch(getProfileById(storedData.profile.profileId));
+      dispatch(getAllWorkExperiences(storedData.profile.profileId));
+      if (errors === 0) {
+        success("Successfully updated all offline edits!");
+      } else {
+        error("Sorry, something offline edits were not updated.");
+      }
+      //clear offlineQueue
+      dispatch(clearOfflineQueue());
+      dispatch(setIsLoading(false));
     }
   });
-
-  //clear offlineQueue
-  dispatch(clearOfflineQueue());
-  dispatch(setIsLoading(false));
 };
 
 export const clearOfflineQueue = () => (dispatch) => {
@@ -450,4 +598,7 @@ export const clearOfflineQueue = () => (dispatch) => {
     type: ACTION.SET_OFFLINE_QUEUE,
     offlineQueue: [],
   });
+  const storedData = loadState();
+  dispatch(getProfileById(storedData.profile.profileId));
+  dispatch(getAllWorkExperiences(storedData.profile.profileId));
 };

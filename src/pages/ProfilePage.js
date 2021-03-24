@@ -16,7 +16,11 @@ import CreateProfileCard from "../components/CreateProfileCard";
 import { imageUri } from "../assets/fallBackPlaceholder";
 
 import { toDisplayDateFormat } from "../common/dateMethods";
-import { getAllWorkExperiences, getProfileById } from "../store/profile/action";
+import {
+  getAllWorkExperiences,
+  getProfileById,
+  setProfileId,
+} from "../store/profile/action";
 
 import "./ProfilePage.css";
 import "antd/dist/antd.css";
@@ -30,6 +34,10 @@ const ProfilePage = (props) => {
   const history = useHistory();
 
   useEffect(() => {
+    if (userProfile) {
+      console.log("hi");
+      dispatch(setProfileId(userProfile.id));
+    }
     dispatch(getProfileById(profileId));
     dispatch(getAllWorkExperiences(profileId));
   }, [dispatch]);
